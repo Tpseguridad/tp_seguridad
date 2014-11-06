@@ -12,12 +12,15 @@
 		<![endif]-->
 		<link href='http://fonts.googleapis.com/css?family=Asap' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="../css/estilos.css">
+		<script type="text/javascript" src="../js/jquery_1.4.js"></script>
+		<script type="text/javascript" src="../js/jquery_validate.js"></script>
+		<script type="text/javascript" src="../js/validacion.js"></script>
 	</head>
 	<body>
 		<header>
 			<div id="login">
-				<form name="formlogin" action="" method="POST">
-					<label for="email">	<input type="email" name="email" placeholder="Email" autocomplete="off" /></label>
+				<form name="formlogin" id="formlogin" action="" method="POST">
+					<label for="email2">	<input type="email" name="email" placeholder="email" autocomplete="off" /></label>
 					<label for="password">	<input type="password" name="password_us" placeholder="Password"  autocomplete="off"/></label>
 					<input type="submit" class="boton" value="login" />
 					<a href="registrousuario.php" class="boton2">Registrarme</a>
@@ -41,7 +44,7 @@
 			<section>
 				<h2>Registrate</h2>
 				<div class="formulario">
-					<form name="formregistro" id="registro" action="" method="post">
+					<form name="formregistro" id="formregistro" action="" method="post">
 						<ul>
 							<li>
 								<label for="nombre">Nombre:</label>
@@ -61,7 +64,7 @@
 							</li>
 							<li>
 								<label for="paswword">Password:</label>
-								<input type="password"  name="paswword_us" id="paswword_us" placeholder="" autocomplete="off" />
+								<input type="password"  name="password_us" id="password_us" placeholder="" autocomplete="off" />
 							</li>
 							<li>
 								<label for="repassword">Re-ingrese Password:</label>

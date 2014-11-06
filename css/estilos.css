@@ -69,14 +69,14 @@ a.delete
 input.error ,textarea.error{ border: 2px solid #c50202; }
 label.error
 {
-	color:#ccc;
+	color:#c50202;
 	width:100%;
 	font-size:0.75em;
 	margin:0;
 }
 #mensaje
 {
-	color:#fff;
+	color:#444444;
 	text-align:center;
 }
 .clearfix
