@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	$.validator.addMethod("PASSWORD",function(value,element){
-                return this.optional(element) || /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/i.test(value);
-            },"El password tiene que tener al entre 8 y 16 caracteres, letras mayúsuclas, minúsculas y números.");
+                return this.optional(element) || /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,16}$/i.test(value);
+            },"El password tiene que tener entre 6 y 16 caracteres, letras mayúsuclas, minúsculas y números.");
 
 	$("#mensaje").hide();
 	$("#formregistro").validate({
