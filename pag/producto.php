@@ -1,46 +1,7 @@
-<!doctype html>
-<html lang ="es">
-	<head>
-		<meta charset="UTF-8">
-		<title>TusPrecios.com.ar</title>
-		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />	
-		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
-		<link rel="author" type="text/plain" href="humans.txt"/>
-		<link rel="sitemap" type="application/xml" title="Sitemap" href="sitemap.xml"/>
-		<!--[if lt IE 9]>
-			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
-		<link href='http://fonts.googleapis.com/css?family=Asap' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" type="text/css" href="../css/estilos.css">
-		<script type="text/javascript" src="../js/jquery_1.4.js"></script>
-		<script type="text/javascript" src="../js/jquery_validate.js"></script>
-		<script type="text/javascript" src="../js/validacion.js"></script>
-	</head>
-	<body>
-		<header>
-			<div id="login">
-				<form name="formlogin" id="formlogin" action="" method="POST">
-					<label for="email2">	<input type="email" name="email" placeholder="Email" autocomplete="off" /></label>
-					<label for="password">	<input type="password" name="password_us" placeholder="Password"  autocomplete="off"/></label>
-					<input type="submit" class="boton" value="login" />
-					<a href="registrousuario.php" class="boton2">Registrarme</a>
-				</form>
-			</div>
-			<div id="logo">
-			</div>
-		</header>
-		<nav>
-			<div id="menu">
-				<ul class="menu">
-					<li><a href="../index.php">Home</a></li>
-					<li><a href="subirprecios.php">Subir Precios</a>
-					<li><a href="subirproductos.php">Subir Productos</a></li>
-					</li>
-				</ul>
-			</div>
-		</nav>
+<?php
+	include ("header.php");
+?>
 		<div id="main">
-			<div id="main">
 			<section>
 				<h1>Nombre Producto</h1>
 				<p>Precio Promedio: $</p>
@@ -72,11 +33,6 @@
 					<p class="autor">Autor</p>
 				</div>
 			</section>
-			<a href="#" id ="top" ></a>
-		</div>
-		<footer>
-			<a href="#">Acerca de Nosotros </a> | <a href="#">Ayuda </a> | <a href="#">Términos y condiciones </a> | <a href="#">Contacto </a>
-		</footer>
-		<div id="copyrigth">Tp Seguridad de Aplicaciones Web | Andrés Malagreca | Damián Berruezo | Celeste Coopa | Alicia Rosenthal</div>
-	</body>
-</html>
+<?php
+	include ("footer.php");
+?>
