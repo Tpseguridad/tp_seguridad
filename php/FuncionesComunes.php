@@ -28,7 +28,7 @@
         }
         
         if ($stmt !== null) {
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } else {
             return null;
         }
@@ -60,8 +60,11 @@
     function prepareStatement (PDO &$dbConnection, $sql, $paramArray) {
         $stmt = $dbConnection->prepare($sql);
         
-        for ($i = 1; $i <= count($paramArray); $i ++) {
-            $stmt->bindParam($i, $paramArray[$i]);
+        for ($i = 0; $i < count($paramArray); $i++) {
+            $stmt->bindParam(($i+1), $paramArray[$i]);
+            if (end($paramArray) == null) {
+                array_pop($paramArray);
+            }
         }
         
         return $stmt;

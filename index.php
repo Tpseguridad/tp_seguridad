@@ -17,6 +17,7 @@
 		<script type="text/javascript" src="js/validacion.js"></script>
                 <script type="text/javascript" src="js/commonFunctions.js"></script>
                 <script type="text/javascript" src="js/auxiliarFunctions.js"></script>
+                <script type="text/javascript" src="js/index.js"></script>
 	</head>
 	<body>
 		<header>
@@ -46,23 +47,27 @@
 			<section>
 				<h1>Listado de precios</h1>
 				<p>Elegi la semana: </p> 
-				<select>
+				<select id="semanas">
 					<option></option>
 				</select>
 				<!-- aca meter combobox-->
 				<table border="1" width="100%">
+                                    <thead>
 					<tr>
 						<th>Producto</th>
 						<th>Precio Promedio</th>
 						<th>Precio Máximo</th>
 						<th>Precio Mínimo</th>
 					</tr>
+                                    </thead>
+                                    <tbody id="productos">
 					<tr>
 						<td><a href="pag/producto.php">texto</a></td>
 						<td>texto</td>
 						<td>texto</td>
 						<td>texto</td>
 					</tr>
+                                    </tbody>
 				</table>
 			</section>
 			<a href="#" id ="top" ></a>

@@ -3,11 +3,12 @@ function makeAJAXRequest (urlString, dataArray, processResponse, handleResponseE
     sendMessage(urlString, buildDataObject, processResponse, handleResponseError);
 }
 
-function thisProcessResponse (resultJSONString) {
-    alert(resultJSONString.holiwis + '');
-}
-
 function MessageParameter (propertyName, propertyValue) {
     this.propertyName = propertyName;
     this.propertyValue = propertyValue;
 }
+
+function mostrarMensajeError (responseJSONMessage) {
+    alert(responseJSONMessage.errorMessage);
+}
+

@@ -4,37 +4,66 @@
     require_once './FuncionesComunes.php';
     require_once './Funciones.php';
     
-    $stmtResult = queryStatement('SELECT * FROM tp1_usuario');
+    /*$stmtResult = queryStatement('SELECT * FROM tp1_usuario');
     var_dump($stmtResult);
     $usuario = parseUsuario($stmtResult);
     var_dump($usuario);
-    var_dump(json_encode($usuario));
+    var_dump(json_encode($usuario));*/
     
-    switch ($_POST['action']) {
-        case SQLStatement::$traerSemanasProducto:
+    $result = null;
+    
+    switch ($_GET['action']) {
+        case AccionControlador::$traerSemanasProducto:
+            $stmtResult = queryStatement(SQLStatement::$traerSemanasProducto);
+            $result = parseSemanas($stmtResult);
             break;
-        case SQLStatement::$traerProductosDeSemana:
+        case AccionControlador::$traerProductosDeSemana:
+            $paramArray[] = $_GET['semana'];
+            $stmtResult = queryStatement(SQLStatement::$traerProductosDeSemana, $paramArray);
+            $result = parseResultadoSemanaProducto($stmtResult);
             break;
-        case SQLStatement::$traerUnProductoDeSemana:
+        case AccionControlador::$traerUnProductoDeSemana:
+            $stmtResult = queryStatement(SQLStatement::$traerUnProductoDeSemana);
+            $result = parseProducto($stmtResult);
             break;
-        case SQLStatement::$traerComentarios:
+        case AccionControlador::$traerComentarios:
+            $stmtResult = queryStatement(SQLStatement::$traerComentarios);
+            $result = parseComentario($stmtResult);
             break;
-        case SQLStatement::$traerNombreProducto:
+        case AccionControlador::$traerNombreProducto:
+            $stmtResult = queryStatement(SQLStatement::$traerNombreProducto);
+            $result = parseProducto($stmtResult);
             break;
-        case SQLStatement::$traerProductos:
+        case AccionControlador::$traerProductos:
+            $stmtResult = queryStatement(SQLStatement::$traerProductos);
+            $result = parseProducto($stmtResult);
             break;
-        case SQLStatement::$traerUsuario:
+        case AccionControlador::$traerUsuario:
+            $stmtResult = queryStatement(SQLStatement::$traerUsuario);
+            $result = parseUsuario($stmtResult);
             break;
-        case SQLStatement::$insertarComentario:
+        case AccionControlador::$insertarComentario:
+            $stmtResult = queryStatement(SQLStatement::$insertarComentario);
+            $result = parseResult($stmtResult);
             break;
-        case SQLStatement::$insertarPrecioProducto:
+        case AccionControlador::$insertarPrecioProducto:
+            $stmtResult = queryStatement(SQLStatement::$insertarPrecioProducto);
+            $result = parseResult($stmtResult);
             break;
-        case SQLStatement::$insertarProducto:
+        case AccionControlador::$insertarProducto:
+            $stmtResult = queryStatement(SQLStatement::$insertarProducto);
+            $result = parseResult($stmtResult);
             break;
-        case SQLStatement::$insertarUsuario:
+        case AccionControlador::$insertarUsuario:
+            $stmtResult = queryStatement(SQLStatement::$insertarUsuario);
+            $result = parseResult($stmtResult);
             break;
-        case SQLStatement::$actualizaPrecioProducto:
+        case AccionControlador::$actualizaPrecioProducto:
+            $stmtResult = queryStatement(SQLStatement::$actualizaPrecioProducto);
+            $result = parseResult($stmtResult);
             break;
     }
+    
+    echo json_encode($result);
     
 ?>

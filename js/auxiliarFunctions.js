@@ -1,7 +1,6 @@
 function formatMessage (dataArray) {
     var iteratorA = 0;
     var resultObject = {};
-    
     for (iteratorA = 0; iteratorA < dataArray.length; iteratorA++) {
         resultObject[dataArray[iteratorA].propertyName] = dataArray[iteratorA].propertyValue;
     }
@@ -16,9 +15,12 @@ function sendMessage (urlString, buildDataObject, processResponse, handleRespons
 }
 
 function handleResponse (responseJSONMessage, processResponse, handleResponseError) {
-    if (responseJSONMessage.errorMessage === null) {
-        processResponse(responseJSONMessage);
-    } else {
-        handleResponseError(responseJSONMessage);
+    if (responseJSONMessage != null) {
+        if (responseJSONMessage.errorMessage === undefined) {
+            processResponse(responseJSONMessage);
+        } else {
+            handleResponseError(responseJSONMessage);
+        }
     }
+    //else {   processResponse(responseJSONMessage); }
 }

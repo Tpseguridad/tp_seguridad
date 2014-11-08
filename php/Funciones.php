@@ -2,51 +2,87 @@
     require_once './Clases.php';
     require_once './Constantes.php';
     
+    function parseSemanas ($stmtResult) {
+        $semanas = null;
+         foreach ($stmtResult as $fila) {
+            $semanas[] = array('semana' => $fila['semana']);
+        }
+        return $semanas;
+    }
+    
     function parseUsuario ($stmtResult) {
-        $usuario = new Usuario(
-                $stmtResult[tp1_usuario::$id],
-                $stmtResult[tp1_usuario::$idRol],
-                $stmtResult[tp1_usuario::$nombre],
-                $stmtResult[tp1_usuario::$apellido],
-                $stmtResult[tp1_usuario::$email],
-                $stmtResult[tp1_usuario::$usuario],
-                $stmtResult[tp1_usuario::$password]
-        );
-        
-        return $usuario;
+        $usuarios = null;
+        foreach ($stmtResult as $fila) {
+            $usuarios[] = new Usuario(
+                    $fila[tp1_usuario::$id],
+                    $fila[tp1_usuario::$idRol],
+                    $fila[tp1_usuario::$nombre],
+                    $fila[tp1_usuario::$apellido],
+                    $fila[tp1_usuario::$email],
+                    $fila[tp1_usuario::$usuario],
+                    $fila[tp1_usuario::$password]
+            );
+        }
+        return $usuarios;
     }
     
     function parseProducto ($stmtResult) {
-        $producto = new Producto(
-                $stmtResult[tp1_producto::$id],
-                $stmtResult[tp1_producto::$nombre],
-                $stmtResult[tp1_producto::$descripcion]
-        );
-        
-        return $producto;
+        $productos = null;
+        foreach ($stmtResult as $fila) {
+            $productos[] = new Producto(
+                    $fila[tp1_producto::$id],
+                    $fila[tp1_producto::$nombre],
+                    $fila[tp1_producto::$descripcion]
+            );
+        }
+        return $productos;
     }
     
     function parsePrecioProductoUsuario ($stmtResult) {
-        $ppu = new PrecioProductoUsuario(
-                $stmtResult[tp1_precio_producto_usuario::$id],
-                $stmtResult[tp1_precio_producto_usuario::$idProducto],
-                $stmtResult[tp1_precio_producto_usuario::$idUsuario],
-                $stmtResult[tp1_precio_producto_usuario::$precio],
-                $stmtResult[tp1_precio_producto_usuario::$semana]
-        );
-        
-        return $ppu;
+        $ppus = null;
+        foreach ($stmtResult as $fila) {
+            $ppus[] = new PrecioProductoUsuario(
+                    $fila[tp1_precio_producto_usuario::$id],
+                    $fila[tp1_precio_producto_usuario::$idProducto],
+                    $fila[tp1_precio_producto_usuario::$idUsuario],
+                    $fila[tp1_precio_producto_usuario::$precio],
+                    $fila[tp1_precio_producto_usuario::$semana]
+            );
+        }
+        return $ppus;
     }
     
     function parseComentarioUsuarioProducto ($stmtResult) {
-        $cup = new ComentarioUsuarioProducto (
-                $stmtResult[tp1_comentario_usuario_producto::$id],
-                $stmtResult[tp1_comentario_usuario_producto::$idProducto],
-                $stmtResult[tp1_comentario_usuario_producto::$idUsuario],
-                $stmtResult[tp1_comentario_usuario_producto::$comentario],
-                $stmtResult[tp1_comentario_usuario_producto::$titulo]
-        );
+        $cups = null;
+        foreach ($stmtResult as $fila) {
+            $cups[] = new ComentarioUsuarioProducto (
+                    $fila[tp1_comentario_usuario_producto::$id],
+                    $fila[tp1_comentario_usuario_producto::$idProducto],
+                    $fila[tp1_comentario_usuario_producto::$idUsuario],
+                    $fila[tp1_comentario_usuario_producto::$comentario],
+                    $fila[tp1_comentario_usuario_producto::$titulo]
+            );
+        }
+        return $cups;
+    }
+    
+    function parseResultadoSemanaProducto ($stmtResult) {
+        $rsps = null;
         
-        return $cup;
+        foreach ($stmtResult as $fila) {
+            $rsps[] = new ResultadoSemanaProducto (
+                    $fila[tp1_resultado_semana_producto::$nombreProducto],
+                    $fila[tp1_resultado_semana_producto::$semana],
+                    $fila[tp1_resultado_semana_producto::$promedio],
+                    $fila[tp1_resultado_semana_producto::$minimo],
+                    $fila[tp1_resultado_semana_producto::$maximo]
+            );
+        }
+        
+        return $rsps;
+    }
+    
+    function parseResponse ($stmtResult) {
+        return array('cantidadFilas' => $stmtResult);
     }
 ?>
