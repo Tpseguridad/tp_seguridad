@@ -49,7 +49,6 @@ id_produ INT NOT NULL,
 id_usu INT NOT NULL,
 titulo VARCHAR (128) NOT NULL,
 comentario VARCHAR (4096) NOT NULL,
-precio NUMERIC (10,2) NOT NULL,
 CONSTRAINT pk_comen_id PRIMARY KEY (id_comentario_producto),
 CONSTRAINT fk_us FOREIGN KEY (id_usu)
 REFERENCES tp1_usuario(id_usuario),
@@ -58,7 +57,7 @@ REFERENCES tp1_producto(id_producto)
 );
 
 CREATE VIEW tp1_resultado_semana_producto AS
-SELECT ppu.id_prod, ppu.semana, AVG(ppu.precio) AS "promedio", 
+SELECT ppu.nombre_producto, ppu.semana, AVG(ppu.precio) AS "promedio", 
 MIN(ppu.precio) AS "minimo", 
 MAX(ppu.precio) AS "maximo" 
 FROM tp1_precio_producto_usuario ppu
