@@ -12,9 +12,11 @@
 		<![endif]-->
 		<link href='http://fonts.googleapis.com/css?family=Asap' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="css/estilos.css">
-		<script type="text/javascript" src="js/jquery_1.4.js"></script>
+		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
 		<script type="text/javascript" src="js/jquery_validate.js"></script>
 		<script type="text/javascript" src="js/validacion.js"></script>
+                <script type="text/javascript" src="js/commonFunctions.js"></script>
+                <script type="text/javascript" src="js/auxiliarFunctions.js"></script>
 	</head>
 	<body>
 		<header>

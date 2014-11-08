@@ -1,24 +1,78 @@
 <?php
-    class Columna {
-        public $nombre;
-        public $valor;
+//    class Columna {
+//        public $nombre;
+//        public $valor;
+//        
+//        function __construct ($nombre = null, $valor = null) {
+//            $this->nombre = $nombre;
+//            $this->valor = $valor;
+//        }
+//    }
+//    
+//    class SQLStatement {
+//        public $tipo;
+//        public $nombreTabla;
+//        public $paramArray;
+//        
+//        function __construct ($tipo, $nombreTabla, $paramArray) {
+//            $this->tipo = $tipo;
+//            $this->nombreTabla = $nombreTabla;
+//            $this->paramArray = $paramArray;
+//        }
+//    }
+    
+    abstract class AccionControlador {
+        static $traerSemanasProducto = 'semanasProd';
+        static $traerProductosDeSemana = 'traerProdsDeSemana';
         
-        function __construct ($nombre = null, $valor = null) {
-            $this->nombre = $nombre;
-            $this->valor = $valor;
-        }
+        static $traerUnProductoDeSemana = 'traerUnProdDeSemana';
+        static $traerComentarios = 'traerCommments';
+        static $insertarComentario = 'insComment';
+        
+        static $traerNombreProducto = 'traerNomProd';
+        static $insertarPrecioProducto = 'insPPU';
+        static $actualizaPrecioProducto = 'updPPU';
+        
+        static $insertarProducto = 'insProd';
+        static $traerProductos = 'traerProds';
+        
+        static $insertarUsuario = 'insUsu';
+        static $traerUsuario = 'traerUsu';
+        
     }
     
-    class SQLStatement {
-        public $tipo;
-        public $nombreTabla;
-        public $paramArray;
+    abstract class SQLStatement {
+        static $traerSemanasProducto = 
+                'SELECT distinct semana FROM tp1_resultado_semana_producto rsp';
+        static $traerProductosDeSemana = 
+                'SELECT prod.nombre_producto, rsp.promedio, rsp.maximo, rsp.minimo FROM tp1_resultado_semana_producto rsp '.
+                'INNER JOIN tp1_producto prod ON rsp.id_prod = prod.id_producto WHERE rsp.semana = ?';
         
-        function __construct ($tipo, $nombreTabla, $paramArray) {
-            $this->tipo = $tipo;
-            $this->nombreTabla = $nombreTabla;
-            $this->paramArray = $paramArray;
-        }
+        static $traerUnProductoDeSemana = 
+                'SELECT prod.nombre_producto, rsp.promedio, rsp.maximo, rsp.minimo FROM tp1_resultado_semana_producto rsp '.
+                'INNER JOIN tp1_producto prod ON rsp.id_prod = prod.id_producto WHERE rsp.id_prod = ? AND rsp.semana = ?';
+        static $traerComentarios = 
+                'SELECT cup.comentario, cup.titulo, usu.apellido, usu.nombre FROM tp1_comentario_usuario_producto cup '.
+                'INNER JOIN tp1_usuario usu ON cup.id_usu = usu.id_usuario WHERE cup.id_produ = ?';
+        static $insertarComentario = 
+                'INSERT INTO tp1_comentario_usuario_producto (comentario, id_produ, id_usu, titulo) VALUES (?, ?, ?, ?)';
+        
+        static $traerNombreProducto = 
+                'SELECT prod.nombre_producto FROM tp1_producto prod WHERE prod.id_producto = ?';
+        static $insertarPrecioProducto = 
+                'INSERT INTO tp1_precio_producto_usuario (id_prod, id_us, precio, semana) VALUES (?, ?, ?, ?)';
+        static $actualizaPrecioProducto = 
+                'UPDATE tp1_precio_producto_usuario SET precio = ? WHERE id_prod = ? AND id_us = ? AND semana = ?';
+        
+        static $insertarProducto = 
+                'INSERT INTO tp1_producto (nombre_producto, descripcion) VALUES (?, ?)';
+        static $traerProductos = 
+                'SELECT prod.nombre_producto, prod.descripcion FROM tp1_producto prod';
+        
+        static $insertarUsuario = 
+                'INSERT INTO tp1_usuario (nombre_usuario, nombre, apellido, email, password_us, usuario_rol) VALUES (?, ?, ?, ?, ?, ?)';
+        static $traerUsuario = 
+                'SELECT usu.nombre, usu.apellido FROM tp1_usuario usu WHERE prod.nombre_usuario = ? AND prod.password_us = ?';
     }
 
     abstract class tp1_usuario {

@@ -72,11 +72,11 @@
      * SELECT distinct semana FROM tp1_resultado_semana_producto rsp //Trae semanas disponibles con precios productos
      * 
      * SELECT prod.nombre_producto, rsp.promedio, rsp.maximo, rsp.minimo FROM tp1_resultado_semana_producto rsp 
-     *  INNER JOIN tp1_producto prod ON rsp.id_prod = prod.id_producto WHERE rsp.semana = ? //Trae productos
+     *  INNER JOIN tp1_producto prod ON rsp.id_prod = prod.id_producto WHERE rsp.semana = ? //Trae valores de productos de una semana especifica
      * 
      ** producto.php
      * SELECT prod.nombre_producto, rsp.promedio, rsp.maximo, rsp.minimo FROM tp1_resultado_semana_producto rsp 
-     *  INNER JOIN tp1_producto prod ON rsp.id_prod = prod.id_producto WHERE rsp.id_prod = ? AND rsp.semana = ? //Trae productos
+     *  INNER JOIN tp1_producto prod ON rsp.id_prod = prod.id_producto WHERE rsp.id_prod = ? AND rsp.semana = ? //Trae un producto y sus valores de una semana especifica
      * 
      * SELECT cup.comentario, cup.titulo, usu.apellido, usu.nombre FROM tp1_comentario_usuario_producto cup 
      *  INNER JOIN tp1_usuario usu ON cup.id_usu = usu.id_usuario WHERE cup.id_produ = ? //Trae comentarios de un producto
@@ -99,6 +99,6 @@
      * INSERT INTO tp1_usuario (nombre_usuario, nombre, apellido, email, password_us, usuario_rol) VALUES (?, ?, ?, ?, ?, ?) //Inserta nuevo usuario
      * 
      ** login.php :
-     * SELECT * FROM tp1_usuario usu WHERE prod.nombre_usuario = ? AND prod.password_us = ? 7 //Trae info de usuario
+     * SELECT usu.nombre, usu.apellido FROM tp1_usuario usu WHERE prod.nombre_usuario = ? AND prod.password_us = ? //Trae info de usuario
      */
 ?>
