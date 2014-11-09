@@ -36,7 +36,9 @@
         static $insertarProducto = 'insProd';
         static $buscarProducto = 'busProd';
         static $traerProductos = 'traerProds';
+        static $traerUnProducto = 'traerUnProd';
         static $actualizarProducto = 'actProd';
+        static $borrarProducto = 'delProd';
         
         static $insertarUsuario = 'insUsu';
         static $traerUsuario = 'traerUsu';
@@ -70,6 +72,8 @@
         
         static $insertarProducto = 
                 'INSERT INTO tp1_producto (nombre_producto, descripcion) VALUES (?, ?)';
+        static $traerUnProducto =
+                'SELECT prod.id_producto, prod.nombre_producto, prod.descripcion FROM tp1_producto prod WHERE prod.id_producto = ?';
         static $traerProductos = 
                 'SELECT prod.id_producto, prod.nombre_producto, prod.descripcion FROM tp1_producto prod';
         
@@ -83,6 +87,9 @@
         
         static $actualizarProducto = 
                 'UPDATE tp1_producto SET nombre_producto = ?, descripcion = ? WHERE id_producto = ?';
+        
+        static $borrarProducto =
+                'DELETE FROM tp1_producto WHERE id_producto = ?';
     }
 
     abstract class tp1_usuario {

@@ -40,6 +40,12 @@
             $stmtResult = queryStatement(SQLStatement::$traerProductos);
             $result = parseProducto($stmtResult);
             break;
+        case AccionControlador::$traerUnProducto:
+            $paramArray[] = $_GET['idProd'];
+            
+            $stmtResult = queryStatement(SQLStatement::$traerUnProducto, $paramArray);
+            $result = parseProducto($stmtResult);
+            break;
         case AccionControlador::$traerUsuario:
             $paramArray[] = $_GET['email'];
             $paramArray[] = $_GET['password_us'];
@@ -71,9 +77,6 @@
                 $result = parseResponse($stmtResult);
             }
             break;
-	case AccionControlador::$buscarProducto:
-            
-            break;
         case AccionControlador::$insertarProducto:            
             $paramArray[] = $_GET['nombre_producto'];
             $stmtResult = queryStatement(SQLStatement::$buscarProducto,$paramArray);
@@ -98,13 +101,14 @@
             $result = parseResponse($stmtResult);
             break;
         case AccionControlador::$actualizarProducto:            
-            $paramArray[] = $_GET['nombre_producto'];
-            $stmtResult = queryStatement(SQLStatement::$buscarProducto,$paramArray);
-            $paramArray[] = $_GET['descripcion'];
-            $paramArray[] = $_GET['id_producto'];
+            $paramArray[] = $_GET['idProd'];
+            $stmtResult = queryStatement(SQLStatement::$traerUnProducto,$paramArray);
             
             if(!empty($stmtResult)) {
-                $paramArray[] = parseIdProducto($stmtResult);
+                $paramArray = null;
+                $paramArray[] = $_GET['nombre_producto'];
+                $paramArray[] = $_GET['descripcion'];
+                $paramArray[] = $_GET['idProd'];
                 $stmtResult = executeStatement(SQLStatement::$actualizarProducto,$paramArray);
                 $result = parseResponse($stmtResult);
             } else {
