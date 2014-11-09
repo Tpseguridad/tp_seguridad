@@ -121,13 +121,14 @@ $(document).ready(function(){
 				url:"../php/MainController.php",
 				contentType: "application/x-www-form-urlencoded",
 				processData: true,
-				data: "&action=insProd&nombre_producto="+escape($('#nombre_producto').val())+"&descripcion="+escape($('#descripcion').val()),
+				data: "&action=" + $('#action').val() + "&nombre_producto="+escape($('#nombre_producto').val())+"&descripcion="+escape($('#descripcion').val())+$('#idProd').val(),
 				success: function(msg){
                                         msg = $.parseJSON(msg);
                                         if (msg.errorMessage !== undefined) {
                                             $("#mensaje").html("<p class='ok'>" + msg.errorMessage + "</p>");
                                         } else {
                                             $("#mensaje").html("<p class='ok'>El mensaje ha sido enviado correctamente.Gracias!</p>");
+                                            cargarListaProductos();
                                         }
 					document.getElementById("nombre_producto").value="";
 					document.getElementById("descripcion").value="";

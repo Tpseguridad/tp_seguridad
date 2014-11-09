@@ -18,6 +18,8 @@
 								</textarea>
 							</li>
 							<li>
+                                                                <input type="hidden" id="idProd" value="">
+                                                                <input type="hidden" id="action" value="insProd"/>
 								<input type="submit" class="boton" value="Enviar" />
 							</li>
 							<li id="mensaje"></li>
@@ -35,10 +37,10 @@
                                     </thead>
                                     <tbody id="productos">
 					<tr>
-						<td>xxxx</td>
-						<td>xxxx</td>
-						<td><a href="#" class="edit"></a></td>
-						<td><a href="#" class="delete"></a></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
 					</tr>
                                     </tbody>
 				</table>
