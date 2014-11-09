@@ -17,6 +17,7 @@
 		<script type="text/javascript" src="../js/validacion.js"></script>
                 <script type="text/javascript" src="../js/commonFunctions.js"></script>
                 <script type="text/javascript" src="../js/auxiliarFunctions.js"></script>
+                <script type="text/javascript" src="../js/md5.js"></script>
 	</head>
 	<body>
 		<header>

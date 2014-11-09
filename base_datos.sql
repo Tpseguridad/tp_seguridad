@@ -56,12 +56,51 @@ CONSTRAINT fk_prod FOREIGN KEY (id_produ)
 REFERENCES tp1_producto(id_producto)
 );
 
+-- CREATE VIEW tp1_resultado_semana_producto AS
+-- SELECT nombre_producto, semana, AVG(precio) AS "promedio", 
+-- MIN(precio) AS "minimo", 
+-- MAX(precio) AS "maximo" 
+-- FROM tp1_precio_producto_usuario ppu INNER JOIN tp1_producto
+-- ON ppu.id_prod = tp1_producto.id_producto
+-- GROUP BY ppu.id_prod, ppu.semana;
+
 CREATE VIEW tp1_resultado_semana_producto AS
-SELECT ppu.nombre_producto, ppu.semana, AVG(ppu.precio) AS "promedio", 
+SELECT ppu.id_prod, ppu.semana, AVG(ppu.precio) AS "promedio", 
 MIN(ppu.precio) AS "minimo", 
 MAX(ppu.precio) AS "maximo" 
-FROM tp1_precio_producto_usuario ppu
-GROUP BY ppu.id_prod, ppu.semana
-;
+FROM tp1_precio_producto_usuario ppu 
+GROUP BY ppu.id_prod, ppu.semana;
 
+INSERT INTO tp1_usuario_rol VALUES (1, 'Administrador');
+INSERT INTO tp1_usuario_rol VALUES (2, 'Usuario');
+
+INSERT INTO tp1_usuario VALUES (1, 'Elandy2009', 'Aa123456', 'Andrés', 'Malagreca', 'leandroandres1@gmail.com', 1);
+INSERT INTO tp1_usuario VALUES (2, 'Celeste1', 'Seguridad2014', 'Celeste', 'Coopa', 'celeste.coopa@gmail.com', 1);
+INSERT INTO tp1_usuario VALUES (3, 'aliciarosenthal', 'Alicia2014', 'Alicia', 'Rosenthal', 'aliciarosenthal@gmail.com', 2);
+INSERT INTO tp1_usuario VALUES (4, 'Damio', 'Damian2014', 'Damian', 'Berruezo', 'damianb@gmail.com', 2);
+
+INSERT INTO `tp1_producto` VALUES (1, 'Ultramanguera', 'Ultramanguera, la mejor manguera del mercado');
+INSERT INTO `tp1_producto` VALUES (2,'Cafe', 'La morenita');
+INSERT INTO `tp1_producto` VALUES (3,' Aceite','El aceite de oliva');
+INSERT INTO `tp1_producto` VALUES (4,' Pan',' Producto comestible que resulta de hornear ');
+INSERT INTO `tp1_producto` VALUES (5,' Helado',' Bonobon corazon');
+ 
+INSERT INTO `tp1_precio_producto_usuario` VALUES (1,1,1,1,10.02);
+INSERT INTO `tp1_precio_producto_usuario` VALUES (3,1,1,2,11.50);
+INSERT INTO `tp1_precio_producto_usuario` VALUES (4,1,1,3,12.00);
+INSERT INTO `tp1_precio_producto_usuario` VALUES (5,1,1,4,12.25);
+ 
+INSERT INTO `tp1_precio_producto_usuario` VALUES (2,1,1,1,20.00);
+INSERT INTO `tp1_precio_producto_usuario` VALUES (6,1,2,2,21.50);
+INSERT INTO `tp1_precio_producto_usuario` VALUES (7,1,2,3,22.00);
+INSERT INTO `tp1_precio_producto_usuario` VALUES (8,1,2,4,23.25);
+ 
+INSERT INTO tp1_precio_producto_usuario VALUES (9,2,1,1,10);
+INSERT INTO tp1_precio_producto_usuario VALUES (10,2,1,2,10.50);
+INSERT INTO tp1_precio_producto_usuario VALUES (11,2,1,3,11);
+INSERT INTO tp1_precio_producto_usuario VALUES (12,2,1,4,11.50);
+INSERT INTO tp1_precio_producto_usuario VALUES (13,2,3,1,10.25);
+INSERT INTO tp1_precio_producto_usuario VALUES (14,2,3,2,10.50);
+INSERT INTO tp1_precio_producto_usuario VALUES (15,2,3,3,11);
+INSERT INTO tp1_precio_producto_usuario VALUES (16,2,3,4,11.25);
 
