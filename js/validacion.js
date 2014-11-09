@@ -117,13 +117,18 @@ $(document).ready(function(){
 			$("#mensaje").show();
 			$("#mensaje").html("<p class='pensando'>Enviando el formulario, por favor espere...</p>");
 			$.ajax({
-				type: "POST",
-				url:"funciones.php",
+				type: "GET",
+				url:"../php/MainController.php",
 				contentType: "application/x-www-form-urlencoded",
 				processData: true,
-				data: "&nombre_producto="+escape($('#precio').val())+"&descripcion="+escape($('#descripcion').val()),
+				data: "&action=insProd&nombre_producto="+escape($('#nombre_producto').val())+"&descripcion="+escape($('#descripcion').val()),
 				success: function(msg){
-					$("#mensaje").html("<p class='ok'>El mensaje ha sido enviado correctamente.Gracias!</p>");
+                                        msg = $.parseJSON(msg);
+                                        if (msg.errorMessage !== undefined) {
+                                            $("#mensaje").html("<p class='ok'>" + msg.errorMessage + "</p>");
+                                        } else {
+                                            $("#mensaje").html("<p class='ok'>El mensaje ha sido enviado correctamente.Gracias!</p>");
+                                        }
 					document.getElementById("nombre_producto").value="";
 					document.getElementById("descripcion").value="";
 					setTimeout(function() {$('#mensaje').fadeOut('fast');}, 6000);

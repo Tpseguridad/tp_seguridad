@@ -82,9 +82,11 @@
         return $rsps;
     }
     
+    function parseIdProducto ($stmtResult) {
+        return $stmtResult[0]['id_producto'];
+    }
+    
     function parseResponse ($stmtResult) {
-        var_dump($stmtResult);
-        
         return array('cantidadFilas' => $stmtResult);
     }
 ?>

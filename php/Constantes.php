@@ -34,7 +34,9 @@
         static $actualizaPrecioProducto = 'updPPU';
         
         static $insertarProducto = 'insProd';
+        static $buscarProducto = 'busProd';
         static $traerProductos = 'traerProds';
+        static $actualizarProducto = 'actProd';
         
         static $insertarUsuario = 'insUsu';
         static $traerUsuario = 'traerUsu';
@@ -75,6 +77,12 @@
                 'INSERT INTO tp1_usuario (nombre_usuario, nombre, apellido, email, password_us, usuario_rol) VALUES (?, ?, ?, ?, ?, ?)';
         static $traerUsuario = 
                 'SELECT usu.nombre, usu.apellido FROM tp1_usuario usu WHERE usu.email = ? AND usu.password_us = ?';
+        
+        static $buscarProducto = 
+                'SELECT prod.id_producto FROM tp1_producto prod WHERE prod.nombre_producto = ?';
+        
+        static $actualizarProducto = 
+                'UPDATE tp1_producto SET nombre_producto = ?, descripcion = ? WHERE id_producto = ?';
     }
 
     abstract class tp1_usuario {

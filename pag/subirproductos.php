@@ -5,7 +5,8 @@
 			<section>
 				<div class="formulario">
 					<h2>Subí un producto</h2>
-					<form name="formproducto" id="formproducto" action="" method="post">
+					<form name="formproducto" id="formproducto" method="post">
+					<script src="../js/subirProductos.js" type="text/javascript"></script>
 						<ul>
 							<li>
 								<label for="nombre_producto">Nombre Producto:</label>
@@ -24,18 +25,22 @@
 					</form>
 				<div>
 				<table border="1" width="100%">
+                                    <thead>
 					<tr>
 						<th>Producto</th>
 						<th>Descripcion</th>
 						<th width="40px">Editar</th>
 						<th width="40px">Borrar</th>
 					</tr>
+                                    </thead>
+                                    <tbody id="productos">
 					<tr>
 						<td>xxxx</td>
 						<td>xxxx</td>
 						<td><a href="#" class="edit"></a></td>
 						<td><a href="#" class="delete"></a></td>
 					</tr>
+                                    </tbody>
 				</table>
 			</section>
 <?php

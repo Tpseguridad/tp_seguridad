@@ -11,8 +11,10 @@
     var_dump(json_encode($usuario));*/
     
     $result = null;
+	!empty($_GET['action']) ? $action = $_GET['action'] : $action = $_POST['action'];
+
     
-    switch ($_GET['action']) {
+    switch ($action) {
         case AccionControlador::$traerSemanasProducto:
             $stmtResult = queryStatement(SQLStatement::$traerSemanasProducto);
             $result = parseSemanas($stmtResult);
@@ -20,7 +22,7 @@
         case AccionControlador::$traerProductosDeSemana:
             $paramArray[] = $_GET['semana'];
             $stmtResult = queryStatement(SQLStatement::$traerProductosDeSemana, $paramArray);
-            $result = parseResponseadoSemanaProducto($stmtResult);
+            $result = parseResultadoSemanaProducto($stmtResult);
             break;
         case AccionControlador::$traerUnProductoDeSemana:
             $stmtResult = queryStatement(SQLStatement::$traerUnProductoDeSemana);
@@ -69,12 +71,20 @@
                 $result = parseResponse($stmtResult);
             }
             break;
-        case AccionControlador::$insertarProducto:
-            $paramArray[] = $_GET['email'];
-            $paramArray[] = $_GET['password_us'];
+	case AccionControlador::$buscarProducto:
             
-            $stmtResult = executeStatement(SQLStatement::$insertarProducto);
-            $result = parseResponse($stmtResult);
+            break;
+        case AccionControlador::$insertarProducto:            
+            $paramArray[] = $_GET['nombre_producto'];
+            $stmtResult = queryStatement(SQLStatement::$buscarProducto,$paramArray);
+            $paramArray[] = $_GET['descripcion'];
+            
+            if(empty($stmtResult)) {
+                $stmtResult = executeStatement(SQLStatement::$insertarProducto,$paramArray);
+                $result = parseResponse($stmtResult);
+            } else {
+                $result = array('errorMessage' => 'Imposible registrar nuevo producto. El producto ya existe.');
+            }
             break;
         case AccionControlador::$insertarUsuario:
             $paramArray[] = $_GET['nombre_usuario'];
@@ -86,6 +96,20 @@
             
             $stmtResult = executeStatement(SQLStatement::$insertarUsuario, $paramArray);
             $result = parseResponse($stmtResult);
+            break;
+        case AccionControlador::$actualizarProducto:            
+            $paramArray[] = $_GET['nombre_producto'];
+            $stmtResult = queryStatement(SQLStatement::$buscarProducto,$paramArray);
+            $paramArray[] = $_GET['descripcion'];
+            $paramArray[] = $_GET['id_producto'];
+            
+            if(!empty($stmtResult)) {
+                $paramArray[] = parseIdProducto($stmtResult);
+                $stmtResult = executeStatement(SQLStatement::$actualizarProducto,$paramArray);
+                $result = parseResponse($stmtResult);
+            } else {
+                $result = array('errorMessage' => 'Imposible actualizar los datos. No se encuentra el producto.');
+            }
             break;
     }
     
