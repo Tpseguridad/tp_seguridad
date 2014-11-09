@@ -20,7 +20,7 @@
         case AccionControlador::$traerProductosDeSemana:
             $paramArray[] = $_GET['semana'];
             $stmtResult = queryStatement(SQLStatement::$traerProductosDeSemana, $paramArray);
-            $result = parseResultadoSemanaProducto($stmtResult);
+            $result = parseResponseadoSemanaProducto($stmtResult);
             break;
         case AccionControlador::$traerUnProductoDeSemana:
             $stmtResult = queryStatement(SQLStatement::$traerUnProductoDeSemana);
@@ -39,28 +39,53 @@
             $result = parseProducto($stmtResult);
             break;
         case AccionControlador::$traerUsuario:
-            $stmtResult = queryStatement(SQLStatement::$traerUsuario);
+            $paramArray[] = $_GET['email'];
+            $paramArray[] = $_GET['password_us'];
+            
+            $stmtResult = queryStatement(SQLStatement::$traerUsuario, $paramArray);
             $result = parseUsuario($stmtResult);
             break;
         case AccionControlador::$insertarComentario:
-            $stmtResult = queryStatement(SQLStatement::$insertarComentario);
-            $result = parseResult($stmtResult);
+            $stmtResult = executeStatement(SQLStatement::$insertarComentario);
+            $result = parseResponse($stmtResult);
             break;
         case AccionControlador::$insertarPrecioProducto:
-            $stmtResult = queryStatement(SQLStatement::$insertarPrecioProducto);
-            $result = parseResult($stmtResult);
+            $date = new DateTime();
+            $semana = $date->format("W");
+            
+            $paramArray[] = $_GET['producto'];
+            $paramArray[] = 1;
+            $paramArray[] = $semana;
+            $existePrecio = queryStatement(SQLStatement::$traerPrecioProducto, $paramArray);
+            $paramArray[] = $_GET['precio'];
+            
+            if (empty($existePrecio)) {
+                $stmtResult = executeStatement(SQLStatement::$insertarPrecioProducto, $paramArray);
+                $result = parseResponse($stmtResult);
+            } else {
+                array_pop($paramArray);
+                array_unshift($paramArray, $_GET['precio']);
+                $stmtResult = executeStatement(SQLStatement::$actualizaPrecioProducto, $paramArray);
+                $result = parseResponse($stmtResult);
+            }
             break;
         case AccionControlador::$insertarProducto:
-            $stmtResult = queryStatement(SQLStatement::$insertarProducto);
-            $result = parseResult($stmtResult);
+            $paramArray[] = $_GET['email'];
+            $paramArray[] = $_GET['password_us'];
+            
+            $stmtResult = executeStatement(SQLStatement::$insertarProducto);
+            $result = parseResponse($stmtResult);
             break;
         case AccionControlador::$insertarUsuario:
-            $stmtResult = queryStatement(SQLStatement::$insertarUsuario);
-            $result = parseResult($stmtResult);
-            break;
-        case AccionControlador::$actualizaPrecioProducto:
-            $stmtResult = queryStatement(SQLStatement::$actualizaPrecioProducto);
-            $result = parseResult($stmtResult);
+            $paramArray[] = $_GET['nombre_usuario'];
+            $paramArray[] = $_GET['nombre'];
+            $paramArray[] = $_GET['apellido'];
+            $paramArray[] = $_GET['email'];
+            $paramArray[] = $_GET['password_us'];
+            $paramArray[] = 1;
+            
+            $stmtResult = executeStatement(SQLStatement::$insertarUsuario, $paramArray);
+            $result = parseResponse($stmtResult);
             break;
     }
     

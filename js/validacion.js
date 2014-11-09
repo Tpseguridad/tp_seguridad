@@ -26,11 +26,11 @@ $(document).ready(function(){
 			$("#mensaje").show();
 			$("#mensaje").html("<p class='pensando'>Enviando el formulario, por favor espere...</p>");
 			$.ajax({
-				type: "POST",
-				url:"funciones.php",
+				type: "GET",
+				url:"../php/MainController.php",
 				contentType: "application/x-www-form-urlencoded",
 				processData: true,
-				data: "&nombre="+escape($('#nombre').val())+"&apellido="+escape($('#apellido').val())+"&nombre_usuario="+escape($('#nombre_usuario').val())+"&email="+escape($('#email').val())+"&password_us="+escape($('#password_us').val()),
+				data: "&action=insUsu&nombre="+escape($('#nombre').val())+"&apellido="+escape($('#apellido').val())+"&nombre_usuario="+escape($('#nombre_usuario').val())+"&email="+escape($('#email').val())+"&password_us="+escape($('#password_us').val()),
 				success: function(msg){
 					$("#mensaje").html("<p class='ok'>El mensaje ha sido enviado correctamente.Gracias!</p>");
 					document.getElementById("nombre").value="";
@@ -61,11 +61,11 @@ $(document).ready(function(){
 			$("#mensaje").show();
 			$("#mensaje").html("<p class='pensando'>Enviando el formulario, por favor espere...</p>");
 			$.ajax({
-				type: "POST",
-				url:"funciones.php",
+				type: "GET",
+				url:"./php/MainController.php",
 				contentType: "application/x-www-form-urlencoded",
 				processData: true,
-				data: "&email="+escape($('#email').val())+"&password_us="+escape($('#password_us').val()),
+				data: "&action=traerUsu&email="+escape($('#email').val())+"&password_us="+escape($('#password_us').val()),
 				success: function(msg){
 					$("#mensaje").html("<p class='ok'>El mensaje ha sido enviado correctamente.Gracias!</p>");
 					document.getElementById("email").value="";
@@ -148,11 +148,11 @@ $(document).ready(function(){
 			$("#mensaje").show();
 			$("#mensaje").html("<p class='pensando'>Enviando el formulario, por favor espere...</p>");
 			$.ajax({
-				type: "POST",
-				url:"funciones.php",
+				type: "GET",
+				url:"../php/MainController.php",
 				contentType: "application/x-www-form-urlencoded",
 				processData: true,
-				data: "&precio="+escape($('#precio').val()),
+				data: "&action=insPPU&precio="+escape($('#precio').val())+"&producto="+$('#productos').val(),
 				success: function(msg){
 					$("#mensaje").html("<p class='ok'>El mensaje ha sido enviado correctamente.Gracias!</p>");
 					document.getElementById("precio").value="";

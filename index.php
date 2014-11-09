@@ -23,8 +23,8 @@
 		<header>
 			<div id="login">
 				<form name="formlogin" id="formlogin" action="#" method="POST">
-					<label for="email">	<input type="email" name="email" placeholder="Email" autocomplete="off" /></label>
-					<label for="password"><input type="password" name="password_us" placeholder="Password"  autocomplete="off"/></label>
+					<label for="email">	<input type="email" id="email" name="email" placeholder="Email" autocomplete="off" /></label>
+					<label for="password"><input type="password" id="password_us" name="password_us" placeholder="Password"  autocomplete="off"/></label>
 					<input type="submit" class="boton" value="login" />
 					<a href="pag/registrousuario.php" class="boton2">Registrarme</a>
 				</form>

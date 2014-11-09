@@ -2,6 +2,7 @@ function loadSemanasDisponibles () {
     var dataArray = [];
     var action = new MessageParameter ('action', 'semanasProd');
     dataArray.push(action);
+    
     makeAJAXRequest('./php/MainController.php', dataArray, cargarListaSemanas, mostrarMensajeError);
 }
 
