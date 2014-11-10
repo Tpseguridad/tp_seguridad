@@ -64,12 +64,14 @@ $(document).ready(function(){
 			var passencriptado = hex_md5(document.getElementById("password_us").value);
                         $.ajax({
 				type: "GET",
-				url:"./php/MainController.php",
+				url:"../php/MainController.php",
 				contentType: "application/x-www-form-urlencoded",
 				processData: true,
-				data: "&action=traerUsu&email="+escape($('#email').val())+"&password_us=" + passencriptado,
+				data: "&action=logInUser&email="+escape($('#email').val())+"&password_us=" + passencriptado,
 				success: function(msg){
-					$("#mensaje").html("<p class='ok'>Te has logueado correctamente.Gracias!</p>"+hash);
+                                        msg = $.parseJSON(msg);
+					$("#mensaje").html("<p class='ok'>Te has logueado correctamente.Gracias!</p>");
+                                        handleResponse(msg, mostrarUsuarioLogueado, mostrarMensajeError);
 					document.getElementById("email").value="";
 					document.getElementById("password_us").value="";
 					setTimeout(function() {$('#mensaje').fadeOut('fast');}, 6000);

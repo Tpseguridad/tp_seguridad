@@ -20,6 +20,7 @@
 							<li>
                                                                 <input type="hidden" id="idProd" value="">
                                                                 <input type="hidden" id="action" value="insProd"/>
+                                                                <input type="button" id="cancelar" style="display: none" class="boton" value="Cancelar" />
 								<input type="submit" class="boton" value="Enviar" />
 							</li>
 							<li id="mensaje"></li>

@@ -43,6 +43,9 @@
         static $insertarUsuario = 'insUsu';
         static $traerUsuario = 'traerUsu';
         
+        static $verificarSesionUsuario = 'checkUser';
+        static $conectarUsuario = 'logInUser';
+        static $desconectarUsuario = 'logOutUser';
     }
     
     abstract class SQLStatement {
@@ -80,7 +83,8 @@
         static $insertarUsuario = 
                 'INSERT INTO tp1_usuario (nombre_usuario, nombre, apellido, email, password_us, usuario_rol) VALUES (?, ?, ?, ?, ?, ?)';
         static $traerUsuario = 
-                'SELECT usu.nombre, usu.apellido FROM tp1_usuario usu WHERE usu.email = ? AND usu.password_us = ?';
+                'SELECT usu.id_usuario, rol.nombre_rol, usu.session_us FROM tp1_usuario usu
+                INNER JOIN tp1_usuario_rol rol ON usu.usuario_rol = rol.id_rol WHERE usu.email = ? AND usu.password_us = ?';
         
         static $buscarProducto = 
                 'SELECT prod.id_producto FROM tp1_producto prod WHERE prod.nombre_producto = ?';
@@ -90,6 +94,13 @@
         
         static $borrarProducto =
                 'DELETE FROM tp1_producto WHERE id_producto = ?';
+        
+        static $verificarSesionUsuario = 
+                'SELECT usu.nombre, usu.apellido, usu.id_usuario, usu.session_us FROM tp1_usuario usu WHERE usu.id_usuario = ? AND usu.session_us = ?';
+        static $conectarUsuario = 
+                'UPDATE tp1_usuario SET session_us = ? WHERE id_usuario = ?';
+        static $desconectarUsuario = 
+                'UPDATE tp1_usuario SET session_us = null WHERE id_usuario = ?';
     }
 
     abstract class tp1_usuario {

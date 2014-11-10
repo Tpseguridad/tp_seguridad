@@ -4,17 +4,79 @@
     require_once './FuncionesComunes.php';
     require_once './Funciones.php';
     
-    /*$stmtResult = queryStatement('SELECT * FROM tp1_usuario');
-    var_dump($stmtResult);
-    $usuario = parseUsuario($stmtResult);
-    var_dump($usuario);
-    var_dump(json_encode($usuario));*/
+    session_start();
     
     $result = null;
-	!empty($_GET['action']) ? $action = $_GET['action'] : $action = $_POST['action'];
-
+    !empty($_GET['action']) ? $action = $_GET['action'] : $action = $_POST['action'];
     
     switch ($action) {
+        case AccionControlador::$verificarSesionUsuario:
+            if (isset($_SESSION['idUsuarioConectado'])) {
+                $usuarioConectado = verificarUsuario();
+                if (!empty($usuarioConectado)) {
+                    $result = generarResponseUsuarioConectado($usuarioConectado);
+                } else {
+                    $result = array('estaConectado' => '0');
+                }
+            } else {
+                $result = array('estaConectado' => '0');
+            }
+            
+            if ($result['estaConectado'] === '0') {
+                session_unset();
+            }
+            
+            break;
+        case AccionControlador::$conectarUsuario:
+            $paramArray[] = $_GET['email'];
+            $paramArray[] = $_GET['password_us'];
+                
+            $existeUsuario = queryStatement(SQLStatement::$traerUsuario, $paramArray);
+            if (!empty($existeUsuario)) {
+                if ($existeUsuario[0]['session_us'] == session_id()) {
+                    session_regenerate_id();
+                }
+                
+                $paramArray = null;
+                $paramArray[] = session_id();
+                $paramArray[] = $existeUsuario[0]['id_usuario'];
+
+                $stmtResult = executeStatement(SQLStatement::$conectarUsuario, $paramArray);
+                $result = parseResponse($stmtResult);
+                
+                if ($result['cantidadFilas'] == true) {
+                    $_SESSION['idUsuarioConectado'] = $existeUsuario[0]['id_usuario'];
+                    
+                    $paramArray = null;
+                    $usuarioConectado = verificarUsuario();
+                    
+                    $result = generarResponseUsuarioConectado($usuarioConectado);
+                }
+            } else {
+                $result = array('errorMessage' => 'Usuario y/o contraseña incorrectos.');
+            }
+            
+            break;
+        case AccionControlador::$desconectarUsuario:
+            if (isset($_SESSION['idUsuarioConectado'])) {
+                $usuarioConectado = verificarUsuario();
+                if (!empty($usuarioConectado)) {
+                    $paramArray = null;
+                    $paramArray[] = $_SESSION['idUsuarioConectado'];
+
+                    $usuarioDesconectado = executeStatement(SQLStatement::$desconectarUsuario, $paramArray);
+                    $result = parseResponse($usuarioDesconectado);
+
+                    if ($result['cantidadFilas'] == true) {
+                        session_unset();
+                        $result = array('estaConectado' => '0');
+                    }
+                } else {
+                    $result = array('errorMessage' => 'Error!');
+                }
+            }
+            break;
+            
         case AccionControlador::$traerSemanasProducto:
             $stmtResult = queryStatement(SQLStatement::$traerSemanasProducto);
             $result = parseSemanas($stmtResult);
@@ -45,13 +107,6 @@
             
             $stmtResult = queryStatement(SQLStatement::$traerUnProducto, $paramArray);
             $result = parseProducto($stmtResult);
-            break;
-        case AccionControlador::$traerUsuario:
-            $paramArray[] = $_GET['email'];
-            $paramArray[] = $_GET['password_us'];
-            
-            $stmtResult = queryStatement(SQLStatement::$traerUsuario, $paramArray);
-            $result = parseUsuario($stmtResult);
             break;
         case AccionControlador::$insertarComentario:
             $stmtResult = executeStatement(SQLStatement::$insertarComentario);
@@ -102,7 +157,7 @@
             break;
         case AccionControlador::$actualizarProducto:            
             $paramArray[] = $_GET['idProd'];
-            $stmtResult = queryStatement(SQLStatement::$traerUnProducto,$paramArray);
+            $stmtResult = executeStatement(SQLStatement::$traerUnProducto,$paramArray);
             
             if(!empty($stmtResult)) {
                 $paramArray = null;
@@ -114,6 +169,12 @@
             } else {
                 $result = array('errorMessage' => 'Imposible actualizar los datos. No se encuentra el producto.');
             }
+            break;
+        case AccionControlador::$borrarProducto:
+            $paramArray[] = $_GET['idProd'];
+            
+            $stmtResult = executeStatement(SQLStatement::$borrarProducto, $paramArray);
+            $result = parseResponse($stmtResult);
             break;
     }
     

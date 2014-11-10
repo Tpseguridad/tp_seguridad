@@ -89,4 +89,21 @@
     function parseResponse ($stmtResult) {
         return array('cantidadFilas' => $stmtResult);
     }
+    
+    function verificarUsuario () {
+        $paramArray[] = $_SESSION['idUsuarioConectado'];
+        $paramArray[] = session_id();
+
+        $usuarioConectado = queryStatement(SQLStatement::$verificarSesionUsuario, $paramArray);
+        
+        return $usuarioConectado;
+    }
+    
+    function generarResponseUsuarioConectado ($usuarioConectado) {
+        return array(
+            'estaConectado' => '1', 
+            'nombre' => $usuarioConectado[0]['nombre'],
+            'apellido' => $usuarioConectado[0]['apellido']
+        );
+    }
 ?>
