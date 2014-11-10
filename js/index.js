@@ -8,9 +8,14 @@ function loadSemanasDisponibles () {
 
 function cargarListaSemanas (responseJSONMessage) {
     for (var i = 0; i < responseJSONMessage.length; i++) {
-        var newOption = '<option value="' + responseJSONMessage[i].semana + '">' + responseJSONMessage[i].semana + '</option>';
+		var newOption = '<option value="' + responseJSONMessage[i].semana + '">' + responseJSONMessage[i].semana + '</option>';
+		if (i+1 == responseJSONMessage.length)
+		{
+			newOption = '<option selected value="' + responseJSONMessage[i].semana + '">' + responseJSONMessage[i].semana + '</option>';
+        }
         $('#semanas').append(newOption);
     }
+	cargarTablaProductos($('#semanas').val());
 }
 
 function cargarTablaProductos (parSemana) {
