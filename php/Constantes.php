@@ -66,6 +66,7 @@
         const verProducto = 'producto.php';
         const subirPrecios = 'subirprecios.php';
         const subirProductos = 'subirproductos.php';
+        const registroUsuario = 'registrousuario.php';
     }
     
     abstract class Controles {

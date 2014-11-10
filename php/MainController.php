@@ -81,7 +81,7 @@
             break;
         //____________________________________________________________________
         case AccionControlador::verificarPermisosPagina:
-            if ($_GET['pagina'] != Paginas::verPrecios && $_GET['pagina'] != Paginas::verProducto) {
+            if ($_GET['pagina'] != Paginas::verPrecios && $_GET['pagina'] != Paginas::verProducto && $_GET['pagina'] != Paginas::registroUsuario) {
                 if (isset($_SESSION['rolUsuario'])) {
                     
                     switch ($_SESSION['rolUsuario']) {
