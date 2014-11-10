@@ -201,7 +201,8 @@
             $semana = $date->format("W");
             
             $paramArray[] = $_GET['producto'];
-            $paramArray[] = 1;
+            $usuarioConectado = verificarUsuario();
+            $paramArray[] = $usuarioConectado[0]['id_usuario'];
             $paramArray[] = $semana;
             $existePrecio = queryStatement(SQLStatement::traerPrecioProducto, $paramArray);
             $paramArray[] = $_GET['precio'];
@@ -234,7 +235,7 @@
             $paramArray[] = $_GET['apellido'];
             $paramArray[] = $_GET['email'];
             $paramArray[] = $_GET['password_us'];
-            $paramArray[] = 1;
+            $paramArray[] = 1; //rol usuario
             
             $stmtResult = executeStatement(SQLStatement::insertarUsuario, $paramArray);
             $result = parseResponse($stmtResult);
