@@ -46,6 +46,7 @@
                 
                 if ($result['cantidadFilas'] == true) {
                     $_SESSION['idUsuarioConectado'] = $existeUsuario[0]['id_usuario'];
+                    $_SESSION['rolUsuario'] = $existeUsuario[0]['nombre_rol'];
                     
                     $paramArray = null;
                     $usuarioConectado = verificarUsuario();
@@ -76,6 +77,47 @@
                 }
             }
             break;
+        //____________________________________________________________________
+        case AccionControlador::$verificarPermisosPagina:
+            if ($_GET['pagina'] != Paginas::verPrecios && $_GET['pagina'] != Paginas::verProducto) {
+                if (isset($_SESSION['rolUsuario'])) {
+                    
+                    switch ($_SESSION['rolUsuario']) {
+                        case RolesUsuario::administrador:
+                            $tienePermisos = in_array($_GET['pagina'], PermisosRol::$permisosAdministrador['paginas']);
+                            break;
+                        case RolesUsuario::registrado:
+                            $tienePermisos = in_array($_GET['pagina'], PermisosRol::$permisosRegistrado['paginas']);
+                            break;
+                    }
+                    
+                    $result = array('tienePermisos' => $tienePermisos, 'mensaje' => 'Usted no esta autorizado a ver esta pagina.');
+                } else {
+                    $result = array('tienePermisos' => false, 'mensaje' => 'Usted no esta autorizado a ver esta pagina.');
+                }
+            }
+            break;
+        case AccionControlador::$verificarPermisosControles:
+            if (isset($_SESSION['rolUsuario'])) {
+
+                switch ($_SESSION['rolUsuario']) {
+                    case RolesUsuario::administrador:
+                        $tienePermisos = in_array($_GET['control'], PermisosRol::$permisosAdministrador['controles']);
+                        break;
+                    case RolesUsuario::registrado:
+                        $tienePermisos = in_array($_GET['control'], PermisosRol::$permisosRegistrado['controles']);
+                        break;
+                    default:
+                        $tienePermisos = false;
+                        break;
+                }
+                
+                $result = array('tienePermisos' => $tienePermisos, 'id' => $_GET['control']);
+            } else {
+                $result = array('tienePermisos' => false, 'id' => $_GET['control']);
+            }
+            break;
+        //____________________________________________________________________   
             
         case AccionControlador::$traerSemanasProducto:
             $stmtResult = queryStatement(SQLStatement::$traerSemanasProducto);

@@ -40,8 +40,8 @@
 			<div id="menu">
 				<ul class="menu">
 					<li><a href="../index.php">Home</a></li>
-					<li><a href="subirprecios.php">Subir Precios</a></li>
-					<li><a href="subirproductos.php">Subir Productos</a></li>
+					<li class="checkControls" id="subirPrecios"><a href="subirprecios.php">Subir Precios</a></li>
+					<li class="checkControls" id="subirProductos"><a href="subirproductos.php">Subir Productos</a></li>
 				</ul>
 			</div>
 		</nav>

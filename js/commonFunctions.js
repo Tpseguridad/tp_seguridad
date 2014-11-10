@@ -22,6 +22,50 @@ function mostrarMensajeError (responseJSONMessage) {
 
 //______________
 
+function verificarPermisosControles () {
+    var controles = $('.checkControls');
+    
+    if (controles.size() > 0) {
+        controles.each(function(){
+            var dataArray = [];
+            var action = new MessageParameter('action', 'checkCtrlPermission');
+            dataArray.push(action);
+            var control = new MessageParameter('control', this.id);
+            dataArray.push(control);
+            var nombrePagina = window.location.pathname.split("/").slice(-1).toString();
+            var pagina = new MessageParameter('pagina', nombrePagina);
+            dataArray.push(pagina);
+            
+            makeAJAXRequest('../php/MainController.php', dataArray, bloquearControl, mostrarMensajeError);
+        });
+    }
+}
+
+function bloquearControl (responseJSONMessage) {
+   if (responseJSONMessage.tienePermisos === false) {
+        $('#' + responseJSONMessage.id).hide();
+    } else {
+        $('#' + responseJSONMessage.id).show();
+    }
+}
+
+function verificarPermisosPaginaActual () {
+    var dataArray = [];
+    var action = new MessageParameter('action', 'checkPermission');
+    dataArray.push(action);
+    var nombrePagina = window.location.pathname.split("/").slice(-1).toString();
+    var pagina = new MessageParameter('pagina', nombrePagina);
+    dataArray.push(pagina);
+    
+    makeAJAXRequest('../php/MainController.php', dataArray, bloquearContenido, mostrarMensajeError);
+}
+
+function bloquearContenido (responseJSONMessage) {
+   if (responseJSONMessage.tienePermisos === false) {
+        $('#main').empty();
+        $('#main').text(responseJSONMessage.mensaje);
+    }
+}
 
 function verificarUsuarioConectado () {
     var dataArray = [];
@@ -49,4 +93,7 @@ function mostrarUsuarioLogueado (responseJSONMessage) {
     } else {
         $('#formlogin').show();
     }
+    
+    verificarPermisosPaginaActual();
+    verificarPermisosControles();
 }

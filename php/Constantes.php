@@ -21,6 +21,38 @@
 //        }
 //    }
     
+    abstract class PermisosRol {
+        static $permisosAdministrador = array(
+            'rol' => array(RolesUsuario::administrador),
+            'paginas' => array(Paginas::subirPrecios, Paginas::subirProductos),
+            'controles' => array(Controles::menuItemPrecios, Controles::menuItemProductos)
+        );
+        
+        static $permisosRegistrado = array(
+            'rol' => array(RolesUsuario::registrado),
+            'paginas' => array(Paginas::subirPrecios),
+            'controles' => array(Controles::menuItemPrecios)
+        );
+    }
+    
+    abstract class RolesUsuario {
+        const administrador = 'administrador';
+        const registrado = 'usuario';
+        const anonimo = 'anonimo';
+    }
+    
+    abstract class Paginas {
+        const verPrecios = 'precioProductos.php';
+        const verProducto = 'producto.php';
+        const subirPrecios = 'subirprecios.php';
+        const subirProductos = 'subirproductos.php';
+    }
+    
+    abstract class Controles {
+        const menuItemPrecios = 'subirPrecios';
+        const menuItemProductos = 'subirProductos';
+    }
+    
     abstract class AccionControlador {
         static $traerSemanasProducto = 'semanasProd';
         static $traerProductosDeSemana = 'traerProdsDeSemana';
@@ -46,6 +78,9 @@
         static $verificarSesionUsuario = 'checkUser';
         static $conectarUsuario = 'logInUser';
         static $desconectarUsuario = 'logOutUser';
+        
+        static $verificarPermisosPagina = 'checkPermission';
+        static $verificarPermisosControles = 'checkCtrlPermission';
     }
     
     abstract class SQLStatement {

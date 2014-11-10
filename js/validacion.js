@@ -72,6 +72,7 @@ $(document).ready(function(){
                                         msg = $.parseJSON(msg);
 					$("#mensaje").html("<p class='ok'>Te has logueado correctamente.Gracias!</p>");
                                         handleResponse(msg, mostrarUsuarioLogueado, mostrarMensajeError);
+                                        verificarPermisosControles();
 					document.getElementById("email").value="";
 					document.getElementById("password_us").value="";
 					setTimeout(function() {$('#mensaje').fadeOut('fast');}, 6000);
