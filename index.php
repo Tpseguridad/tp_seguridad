@@ -5,8 +5,8 @@
 		<title>TusPrecios.com.ar</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />	
 		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
-		<link rel="author" type="text/plain" href="../humans.txt"/>
-		<link rel="sitemap" type="application/xml" title="Sitemap" href="../sitemap.xml"/>
+		<link rel="author" type="text/plain" href="humans.txt"/>
+		<link rel="sitemap" type="application/xml" title="Sitemap" href="sitemap.xml"/>
 		<!--[if lt IE 9]>
 			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
