@@ -119,7 +119,7 @@
                 INNER JOIN tp1_producto prod ON rsp.id_prod = prod.id_producto WHERE rsp.id_prod = ? AND rsp.semana = ?';
         const traerComentarios = 
                 'SELECT cup.comentario, cup.titulo, usu.apellido, usu.nombre FROM tp1_comentario_usuario_producto cup 
-                INNER JOIN tp1_usuario usu ON cup.id_usu = usu.id_usuario WHERE cup.id_produ = ?';
+                LEFT JOIN tp1_usuario usu ON cup.id_usu = usu.id_usuario WHERE cup.id_produ = ?';
         const insertarComentario = 
                 'INSERT INTO tp1_comentario_usuario_producto (comentario, id_produ, id_usu, titulo) VALUES (?, ?, ?, ?)';
         

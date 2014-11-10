@@ -185,8 +185,13 @@
             */
             $paramArray[] = $_GET['comentario'];
             $paramArray[] = $_SESSION['idProducto'];
-            $paramArray[] = 1;
+            
+            $usuarioConectado = verificarUsuario();
+            
+            $paramArray[] = !empty($usuarioConectado) ? $usuarioConectado[0]['id_usuario'] : null;
             $paramArray[] = $_GET['titulo'];
+            
+            //var_dump($paramArray, $usuarioConectado);
             
             $stmtResult = executeStatement(SQLStatement::insertarComentario, $paramArray);
             $result = parseResponse($stmtResult);
