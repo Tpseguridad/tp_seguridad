@@ -47,7 +47,7 @@ CONSTRAINT precio_invalido CHECK (precio>0)
 CREATE TABLE tp1_comentario_usuario_producto(
 id_comentario_producto INT AUTO_INCREMENT NOT NULL,
 id_produ INT NOT NULL, 
-id_usu INT NOT NULL,
+id_usu INT,
 titulo VARCHAR (128) NOT NULL,
 comentario VARCHAR (4096) NOT NULL,
 CONSTRAINT pk_comen_id PRIMARY KEY (id_comentario_producto),

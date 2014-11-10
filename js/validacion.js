@@ -11,13 +11,15 @@ $(document).ready(function(){
 			'apellido': "required",
 			'nombre_usuario': "required",
 			'email': 
-		    {
+                        {
 				required: true,
 				email:true
 			},
-			'password_us': "required PASSWORD",
+			'password_us': {
+                            required: true
+                        },
 			'repassword': {
-				equalTo: "#password_us"
+                            equalTo: "#password_us"
 			}
 		},
 		messages: {'nombre': "Ingrese su nombre",'apellido': "Ingrese su apellido",'nombre_usuario': "Ingrese un apodo", 'email': { required: 'Debe ingresar un email', email: 'Debe ingresar un email v&aacute;lido' }},
@@ -49,32 +51,32 @@ $(document).ready(function(){
 	$("#formlogin").validate({
 		event: "blur",rules: 
 		{
-			'email': 
+			'emailLogIn': 
 		    {
 				required: true,
 				email:true
 			},
-			'password_us': "required PASSWORD"
+			'password_us_logIn': "required PASSWORD"
 		},
 		messages: {'email': { required: 'Debe ingresar un email', email: 'Debe ingresar un email v&aacute;lido' }},
 		debug: true,errorElement: "label",errorContainer: $("#errores"),
 		submitHandler: function(form){
 			$("#mensaje").show();
 			$("#mensaje").html("<p class='pensando'>Enviando el formulario, por favor espere...</p>");
-			var passencriptado = hex_md5(document.getElementById("password_us").value);
+			var passencriptado = hex_md5(document.getElementById("password_us_logIn").value);
                         $.ajax({
 				type: "GET",
 				url:"../php/MainController.php",
 				contentType: "application/x-www-form-urlencoded",
 				processData: true,
-				data: "&action=logInUser&email="+escape($('#email').val())+"&password_us=" + passencriptado,
+				data: "&action=logInUser&email="+escape($('#emailLogIn').val())+"&password_us=" + passencriptado,
 				success: function(msg){
                                         msg = $.parseJSON(msg);
 					$("#mensaje").html("<p class='ok'>Te has logueado correctamente.Gracias!</p>");
                                         handleResponse(msg, mostrarUsuarioLogueado, mostrarMensajeError);
                                         verificarPermisosControles();
-					document.getElementById("email").value="";
-					document.getElementById("password_us").value="";
+					document.getElementById("emailLogIn").value="";
+					document.getElementById("password_us_logIn").value="";
 					setTimeout(function() {$('#mensaje').fadeOut('fast');}, 6000);
 
 				}

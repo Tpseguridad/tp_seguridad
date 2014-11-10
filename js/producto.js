@@ -25,8 +25,13 @@ function mostrarComentarios (responseJSONMessage) {
     $('#tablaComentarios').empty();
     for (var i = 0; i < responseJSONMessage.length; i++) {
         var newRow = '<hr><h3>' + responseJSONMessage[i].titulo + '</h3>' + 
-                '<p>' + responseJSONMessage[i].comentario + '</p>' +
-                '<p class="autor">' + responseJSONMessage[i].apellido + ', ' + responseJSONMessage[i].nombre + '</p>';
+                '<p>' + responseJSONMessage[i].comentario + '</p>';
+        
+        newRow += (responseJSONMessage[i].apellido != null && responseJSONMessage[i].nombre != null) ? 
+            '<p class="autor">' + responseJSONMessage[i].apellido + ', ' + responseJSONMessage[i].nombre + '</p>' :
+            '<p class="autor">Anonimo</p>'
+        ;
+        console.log(responseJSONMessage);
         $('#tablaComentarios').prepend(newRow);
     }
 }

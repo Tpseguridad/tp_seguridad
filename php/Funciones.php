@@ -108,7 +108,7 @@
     }
     
     function verificarUsuario () {
-        $paramArray[] = $_SESSION['idUsuarioConectado'];
+        $paramArray[] = isset($_SESSION['idUsuarioConectado']) ? $_SESSION['idUsuarioConectado'] : -1;
         $paramArray[] = session_id();
 
         $usuarioConectado = queryStatement(SQLStatement::verificarSesionUsuario, $paramArray);
