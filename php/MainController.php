@@ -1,5 +1,8 @@
 <?php
     session_start();
+    if ( isset( $_COOKIE[session_name()] ) ) {
+        setcookie( session_name(), '', time()-3600, '' );
+    }
     
     require_once './Clases.php';
     require_once './Constantes.php';
@@ -71,7 +74,8 @@
                     $result = parseResponse($usuarioDesconectado);
 
                     if ($result['cantidadFilas'] == true) {
-                        session_unset();
+                        unset($_SESSION['idUsuarioConectado']);
+                        unset($_SESSION['rolUsuario']);
                         $result = array('estaConectado' => '0');
                     }
                 } else {
