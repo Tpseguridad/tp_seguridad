@@ -15,9 +15,7 @@ $(document).ready(function(){
 				required: true,
 				email:true
 			},
-			'password_us': {
-                            required: true
-                        },
+			'password_us': "required PASSWORD",
 			'repassword': {
                             equalTo: "#password_us"
 			}
