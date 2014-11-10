@@ -1,12 +1,13 @@
 <?php
 	include ("header.php");
 ?>
+            <script type="text/javascript" src="../js/producto.js"></script>
 		<div id="main">
 			<section>
-				<h1>Nombre Producto</h1>
-				<p>Precio Promedio: $</p>
-				<p>Precio Minimo: $</p>
-				<p>Precio Maximo: $</p>
+				<h1 id="titProd"></h1>
+				<p id="promProd"></p>
+				<p id="minProd"></p>
+				<p id="maxProd"></p>
 				<div class="formulario">
 					<h2>Deja tu comentario</h2>
 					<form name="formcomentario" id="formcomentario" action="" method="post">
@@ -27,10 +28,8 @@
 					</form>
 				<div>
 				<div class="clearfix"></div>
-				<div class="comentario">
-					<h3>Titulo</h3>
-					<p>Comentarios</p>
-					<p class="autor">Autor</p>
+				<div id="tablaComentarios" class="comentario">
+                                    No hay comentarios para este producto.
 				</div>
 			</section>
 <?php

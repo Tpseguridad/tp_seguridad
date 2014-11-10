@@ -94,13 +94,19 @@ $(document).ready(function(){
 			$("#mensaje").show();
 			$("#mensaje").html("<p class='pensando'>Enviando el formulario, por favor espere...</p>");
 			$.ajax({
-				type: "POST",
-				url:"funciones.php",
+				type: "GET",
+				url:"../php/MainController.php",
 				contentType: "application/x-www-form-urlencoded",
 				processData: true,
-				data: "&titulo="+escape($('#titulo').val())+"&comentario="+escape($('#comentario').val()),
+				data: "&action=insComment&titulo="+escape($('#titulo').val())+"&comentario="+escape($('#comentario').val()),
 				success: function(msg){
-					$("#mensaje").html("<p class='ok'>Tu comentario ha sido enviado correctamente.Gracias!</p>");
+                                        msg = $.parseJSON(msg);
+                                        if (msg.errorMessage !== undefined) {
+                                            $("#mensaje").html("<p class='ok'>" + msg.errorMessage + "</p>");
+                                        } else {
+                                            $("#mensaje").html("<p class='ok'>Tu comentario ha sido enviado correctamente.Gracias!</p>");
+                                            cargarComentarios();
+                                        }
 					document.getElementById("titulo").value="";
 					document.getElementById("comentario").value="";
 					setTimeout(function() {$('#mensaje').fadeOut('fast');}, 6000);

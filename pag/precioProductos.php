@@ -8,7 +8,6 @@
 				<p>Elegi la semana: </p> 
 
 				<select id="semanas">
-					<option></option>
 				</select>
 				<!-- aca meter combobox-->
 				<table>
@@ -21,10 +20,6 @@
                                     </thead>
                                     <tbody id="productos">
 					<tr>
-						<td><a href="pag/producto.php">texto</a></td>
-						<td>texto</td>
-						<td>texto</td>
-						<td>texto</td>
 					</tr>
                                     </tbody>
 				</table>

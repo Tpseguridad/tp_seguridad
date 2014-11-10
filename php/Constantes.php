@@ -20,18 +20,38 @@
 //            $this->paramArray = $paramArray;
 //        }
 //    }
+
+    abstract class ListaRoles {
+        static $roles = array(RolesUsuario::administrador, RolesUsuario::registrado);
+    }
     
     abstract class PermisosRol {
         static $permisosAdministrador = array(
             'rol' => array(RolesUsuario::administrador),
             'paginas' => array(Paginas::subirPrecios, Paginas::subirProductos),
-            'controles' => array(Controles::menuItemPrecios, Controles::menuItemProductos)
+            'controles' => array(Controles::menuItemPrecios, Controles::menuItemProductos),
+            'statements' => array(SQLStatement::actualizaPrecioProducto, SQLStatement::actualizarProducto,
+                SQLStatement::borrarProducto, SQLStatement::buscarProducto, SQLStatement::conectarUsuario,
+                SQLStatement::desconectarUsuario, SQLStatement::insertarComentario, SQLStatement::insertarPrecioProducto,
+                SQLStatement::insertarProducto, SQLStatement::insertarUsuario, SQLStatement::traerComentarios,
+                SQLStatement::traerNombreProducto, SQLStatement::traerPrecioProducto, SQLStatement::traerProductos,
+                SQLStatement::traerProductosDeSemana, SQLStatement::traerSemanasProducto, SQLStatement::traerUnProducto,
+                SQLStatement::traerUnProductoDeSemana, SQLStatement::traerUsuario, SQLStatement::verificarSesionUsuario
+            )
         );
         
         static $permisosRegistrado = array(
             'rol' => array(RolesUsuario::registrado),
             'paginas' => array(Paginas::subirPrecios),
-            'controles' => array(Controles::menuItemPrecios)
+            'controles' => array(Controles::menuItemPrecios),
+            'statements' => array(SQLStatement::actualizaPrecioProducto,
+                SQLStatement::buscarProducto, SQLStatement::conectarUsuario,
+                SQLStatement::desconectarUsuario, SQLStatement::insertarComentario, SQLStatement::insertarPrecioProducto,
+                SQLStatement::insertarUsuario, SQLStatement::traerComentarios,
+                SQLStatement::traerNombreProducto, SQLStatement::traerPrecioProducto, SQLStatement::traerProductos,
+                SQLStatement::traerProductosDeSemana, SQLStatement::traerSemanasProducto, SQLStatement::traerUnProducto,
+                SQLStatement::traerUnProductoDeSemana, SQLStatement::traerUsuario, SQLStatement::verificarSesionUsuario
+            )
         );
     }
     
@@ -54,146 +74,154 @@
     }
     
     abstract class AccionControlador {
-        static $traerSemanasProducto = 'semanasProd';
-        static $traerProductosDeSemana = 'traerProdsDeSemana';
+        const traerSemanasProducto = 'semanasProd';
+        const traerProductosDeSemana = 'traerProdsDeSemana';
         
-        static $traerUnProductoDeSemana = 'traerUnProdDeSemana';
-        static $traerComentarios = 'traerCommments';
-        static $insertarComentario = 'insComment';
+        const traerUnProductoDeSemana = 'traerUnProdDeSemana';
+        const traerComentarios = 'traerCommments';
+        const insertarComentario = 'insComment';
         
-        static $traerNombreProducto = 'traerNomProd';
-        static $insertarPrecioProducto = 'insPPU';
-        static $actualizaPrecioProducto = 'updPPU';
+        const traerNombreProducto = 'traerNomProd';
+        const insertarPrecioProducto = 'insPPU';
+        const actualizaPrecioProducto = 'updPPU';
         
-        static $insertarProducto = 'insProd';
-        static $buscarProducto = 'busProd';
-        static $traerProductos = 'traerProds';
-        static $traerUnProducto = 'traerUnProd';
-        static $actualizarProducto = 'actProd';
-        static $borrarProducto = 'delProd';
+        const insertarProducto = 'insProd';
+        const buscarProducto = 'busProd';
+        const traerProductos = 'traerProds';
+        const traerUnProducto = 'traerUnProd';
+        const actualizarProducto = 'actProd';
+        const borrarProducto = 'delProd';
         
-        static $insertarUsuario = 'insUsu';
-        static $traerUsuario = 'traerUsu';
+        const insertarUsuario = 'insUsu';
+        const traerUsuario = 'traerUsu';
         
-        static $verificarSesionUsuario = 'checkUser';
-        static $conectarUsuario = 'logInUser';
-        static $desconectarUsuario = 'logOutUser';
+        const verificarSesionUsuario = 'checkUser';
+        const conectarUsuario = 'logInUser';
+        const desconectarUsuario = 'logOutUser';
         
-        static $verificarPermisosPagina = 'checkPermission';
-        static $verificarPermisosControles = 'checkCtrlPermission';
+        const verificarPermisosPagina = 'checkPermission';
+        const verificarPermisosControles = 'checkCtrlPermission';
+        
+        const verProducto = 'verProducto';
+        const traerDatosProducto = 'datosProd';
     }
     
     abstract class SQLStatement {
-        static $traerSemanasProducto = 
-                'SELECT distinct semana FROM tp1_resultado_semana_producto rsp';
-        static $traerProductosDeSemana = 
-                'SELECT prod.nombre_producto, rsp.semana, rsp.promedio, rsp.maximo, rsp.minimo FROM tp1_resultado_semana_producto rsp 
+        const traerSemanasProducto = 
+                'SELECT distinct semana FROM tp1_resultado_semana_producto rsp ORDER BY semana ASC';
+        const traerProductosDeSemana = 
+                'SELECT prod.id_producto, prod.nombre_producto, rsp.semana, rsp.promedio, rsp.maximo, rsp.minimo FROM tp1_resultado_semana_producto rsp 
                 INNER JOIN tp1_producto prod ON rsp.id_prod = prod.id_producto WHERE rsp.semana = ?'; //guarda!
         
-        static $traerUnProductoDeSemana = 
+        const traerUnProductoDeSemana = 
                 'SELECT prod.nombre_producto, rsp.promedio, rsp.maximo, rsp.minimo FROM tp1_resultado_semana_producto rsp 
                 INNER JOIN tp1_producto prod ON rsp.id_prod = prod.id_producto WHERE rsp.id_prod = ? AND rsp.semana = ?';
-        static $traerComentarios = 
+        const traerComentarios = 
                 'SELECT cup.comentario, cup.titulo, usu.apellido, usu.nombre FROM tp1_comentario_usuario_producto cup 
                 INNER JOIN tp1_usuario usu ON cup.id_usu = usu.id_usuario WHERE cup.id_produ = ?';
-        static $insertarComentario = 
+        const insertarComentario = 
                 'INSERT INTO tp1_comentario_usuario_producto (comentario, id_produ, id_usu, titulo) VALUES (?, ?, ?, ?)';
         
-        static $traerNombreProducto = 
+        const traerNombreProducto = 
                 'SELECT prod.nombre_producto FROM tp1_producto prod WHERE prod.id_producto = ?';
-        static $insertarPrecioProducto = 
+        const insertarPrecioProducto = 
                 'INSERT INTO tp1_precio_producto_usuario (id_prod, id_us, semana, precio) VALUES (?, ?, ?, ?)';
-        static $traerPrecioProducto = 
+        const traerPrecioProducto = 
                 'SELECT 1 FROM tp1_precio_producto_usuario WHERE id_prod = ? AND id_us = ? AND semana = ?';
-        static $actualizaPrecioProducto = 
+        const actualizaPrecioProducto = 
                 'UPDATE tp1_precio_producto_usuario SET precio = ? WHERE id_prod = ? AND id_us = ? AND semana = ?';
         
-        static $insertarProducto = 
+        const insertarProducto = 
                 'INSERT INTO tp1_producto (nombre_producto, descripcion) VALUES (?, ?)';
-        static $traerUnProducto =
+        const traerUnProducto =
                 'SELECT prod.id_producto, prod.nombre_producto, prod.descripcion FROM tp1_producto prod WHERE prod.id_producto = ?';
-        static $traerProductos = 
+        const traerProductos = 
                 'SELECT prod.id_producto, prod.nombre_producto, prod.descripcion FROM tp1_producto prod';
         
-        static $insertarUsuario = 
+        const insertarUsuario = 
                 'INSERT INTO tp1_usuario (nombre_usuario, nombre, apellido, email, password_us, usuario_rol) VALUES (?, ?, ?, ?, ?, ?)';
-        static $traerUsuario = 
+        const traerUsuario = 
                 'SELECT usu.id_usuario, rol.nombre_rol, usu.session_us FROM tp1_usuario usu
                 INNER JOIN tp1_usuario_rol rol ON usu.usuario_rol = rol.id_rol WHERE usu.email = ? AND usu.password_us = ?';
         
-        static $buscarProducto = 
+        const buscarProducto = 
                 'SELECT prod.id_producto FROM tp1_producto prod WHERE prod.nombre_producto = ?';
         
-        static $actualizarProducto = 
+        const actualizarProducto = 
                 'UPDATE tp1_producto SET nombre_producto = ?, descripcion = ? WHERE id_producto = ?';
         
-        static $borrarProducto =
+        const borrarProducto =
                 'DELETE FROM tp1_producto WHERE id_producto = ?';
         
-        static $verificarSesionUsuario = 
+        const verificarSesionUsuario = 
                 'SELECT usu.nombre, usu.apellido, usu.id_usuario, usu.session_us FROM tp1_usuario usu WHERE usu.id_usuario = ? AND usu.session_us = ?';
-        static $conectarUsuario = 
+        const conectarUsuario = 
                 'UPDATE tp1_usuario SET session_us = ? WHERE id_usuario = ?';
-        static $desconectarUsuario = 
+        const desconectarUsuario = 
                 'UPDATE tp1_usuario SET session_us = null WHERE id_usuario = ?';
+        
+        const traerDatosProducto = 
+                'SELECT prod.id_producto, prod.nombre_producto, rsp.semana, rsp.promedio, rsp.maximo, rsp.minimo FROM tp1_resultado_semana_producto rsp 
+                INNER JOIN tp1_producto prod ON rsp.id_prod = prod.id_producto WHERE rsp.id_prod = ? AND rsp.semana = ?';
     }
 
     abstract class tp1_usuario {
-        static $nombreTabla = 'tp1_usuario';
-        static $id = 'id_usuario';
-        static $idRol = 'usuario_rol';
-        static $nombre = 'nombre';
-        static $apellido = 'apellido';
-        static $email = 'email';
-        static $usuario = 'nombre_usuario';
-        static $password = 'password_us';
+        const nombreTabla = 'tp1_usuario';
+        const id = 'id_usuario';
+        const idRol = 'usuario_rol';
+        const nombre = 'nombre';
+        const apellido = 'apellido';
+        const email = 'email';
+        const usuario = 'nombre_usuario';
+        const password = 'password_us';
     }
     
     abstract class tp1_producto {
-        static $nombreTabla = 'tp1_producto';
-        static $id = 'id_producto';
-        static $nombre = 'nombre_producto';
-        static $descripcion = 'descripcion';
+        const nombreTabla = 'tp1_producto';
+        const id = 'id_producto';
+        const nombre = 'nombre_producto';
+        const descripcion = 'descripcion';
     }
     
     abstract class tp1_usuario_rol {
-        static $nombreTabla = 'tp1_usuario_rol';
-        static $id = 'id_rol';
-        static $nombre = 'nombre_rol';
+        const nombreTabla = 'tp1_usuario_rol';
+        const id = 'id_rol';
+        const nombre = 'nombre_rol';
     }
     
     abstract class tp1_comentario_usuario_producto {
-        static $nombreTabla = 'tp1_comentario_usuario_producto';
-        static $id = 'id_comentario_producto';
-        static $idProducto = 'id_produ';
-        static $idUsuario = 'id_usu';
-        static $comentario = 'comentario';
-        static $titulo = 'titulo';
+        const nombreTabla = 'tp1_comentario_usuario_producto';
+        const id = 'id_comentario_producto';
+        const idProducto = 'id_produ';
+        const idUsuario = 'id_usu';
+        const comentario = 'comentario';
+        const titulo = 'titulo';
     }
     
     abstract class tp1_precio_producto_usuario {
-        static $nombreTabla = 'tp1_precio_producto_usuario';
-        static $id = 'id_ppu';
-        static $idProducto = 'id_prod';
-        static $idUsuario = 'id_us';
-        static $precio = 'precio';
-        static $semana = 'semana';
+        const nombreTabla = 'tp1_precio_producto_usuario';
+        const id = 'id_ppu';
+        const idProducto = 'id_prod';
+        const idUsuario = 'id_us';
+        const precio = 'precio';
+        const semana = 'semana';
     }
     
     abstract class tp1_resultado_semana_producto {
-        static $nombreTabla = 'tp1_resultado_semana_producto';
-        static $nombreProducto = 'nombre_producto';
-        static $semana = 'semana';
-        static $promedio = 'promedio';
-        static $minimo = 'minimo';
-        static $maximo = 'maximo';
+        const nombreTabla = 'tp1_resultado_semana_producto';
+        const id = 'id_producto';
+        const nombreProducto = 'nombre_producto';
+        const semana = 'semana';
+        const promedio = 'promedio';
+        const minimo = 'minimo';
+        const maximo = 'maximo';
     }
     
     abstract class ConstantesBD {
-        static $insert = 'INSERT INTO ';
-        static $select = 'SELECT ';
-        static $update = 'UPDATE ';
-        static $delete = 'DELETE FROM ';
+        const insert = 'INSERT INTO ';
+        const select = 'SELECT ';
+        const update = 'UPDATE ';
+        const delete = 'DELETE FROM ';
     }
     
     /*

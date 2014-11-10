@@ -66,7 +66,7 @@ REFERENCES tp1_producto(id_producto)
 -- GROUP BY ppu.id_prod, ppu.semana;
 
 CREATE VIEW tp1_resultado_semana_producto AS
-SELECT ppu.id_prod, ppu.semana, AVG(ppu.precio) AS "promedio", 
+SELECT ppu.id_prod, ppu.semana, ROUND(AVG(ppu.precio), 2) AS "promedio", 
 MIN(ppu.precio) AS "minimo", 
 MAX(ppu.precio) AS "maximo" 
 FROM tp1_precio_producto_usuario ppu 

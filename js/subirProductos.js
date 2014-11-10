@@ -4,6 +4,7 @@ function editarProducto (parIdProd) {
     dataArray.push(action);
     var idProd = new MessageParameter ('idProd', parIdProd);
     dataArray.push(idProd);
+    
     makeAJAXRequest('../php/MainController.php', dataArray, mostrarDatosProducto, mostrarMensajeError);
 }
 
