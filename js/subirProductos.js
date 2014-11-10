@@ -4,20 +4,31 @@ function editarProducto (parIdProd) {
     dataArray.push(action);
     var idProd = new MessageParameter ('idProd', parIdProd);
     dataArray.push(idProd);
+    
     makeAJAXRequest('../php/MainController.php', dataArray, mostrarDatosProducto, mostrarMensajeError);
 }
 
-function borrarProducto (parIdProd) {
+function borrarProducto () {
     var dataArray = [];
     var action = new MessageParameter ('action', 'delProd');
     dataArray.push(action);
-    var idProd = new MessageParameter ('idProd', parIdProd);
+    var idProd = new MessageParameter ('idProd', $('#idProd').val());
     dataArray.push(idProd);
-    makeAJAXRequest('../php/MainController.php', dataArray, promptBorrarProducto, mostrarMensajeError);
+    $('#idProd').val('');
+    makeAJAXRequest('../php/MainController.php', dataArray, cargarListaProductos, mostrarMensajeErrorBorrado);
 }
 
-function promptBorrarProducto () {
+function mostrarMensajeErrorBorrado (responseJSONMessage) {
+    alert(responseJSONMessage.errorMessage);
+}
+
+function promptBorrarProducto (parIdProd) {
+    var borrar = confirm('Presione Aceptar para confirmar el borrado del producto. Esta accion no se puede deshacer!');
     
+    if (borrar) {
+        $('#idProd').val(parIdProd);
+        borrarProducto(parIdProd);
+    }
 }
 
 function mostrarDatosProducto (responseJSONMessage) {
@@ -25,6 +36,7 @@ function mostrarDatosProducto (responseJSONMessage) {
     $('#idProd').val('&idProd=' + responseJSONMessage[0].id);
     $('#descripcion').val(responseJSONMessage[0].descripcion);
     $('#nombre_producto').val(responseJSONMessage[0].nombre);
+    $('#cancelar').show();
 }
 
 function cargarListaProductos () {
@@ -40,7 +52,7 @@ function listarProducto (responseJSONMessage) {
         var newRow = '<tr><td>' + responseJSONMessage[i].nombre + '</td>' +
                 '<td>' + responseJSONMessage[i].descripcion + '</td>' +
                 '<td><a class="edit" href="javascript:editarProducto(' + responseJSONMessage[i].id + ')"></a></td>' +
-                '<td><a class="delete" href="javascript:borrarProducto(' + responseJSONMessage[i].id + ')"></a></td>' +
+                '<td><a class="delete" href="javascript:promptBorrarProducto(' + responseJSONMessage[i].id + ')"></a></td>' +
                 '</tr>';
         $('#productos').append(newRow);
     }
@@ -48,4 +60,12 @@ function listarProducto (responseJSONMessage) {
 
 $(document).ready(function(){
     cargarListaProductos();
+    
+    $('#cancelar').click(function(){
+        $(this).hide();
+        $('#action').val('insProd');
+        $('#idProd').val('');
+        $('#descripcion').val('');
+        $('#nombre_producto').val('');
+    });
 });

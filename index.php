@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!doctype html>
 <html lang ="es">
 	<head>
@@ -77,3 +78,8 @@
 		<div id="copyrigth">Tp Seguridad de Aplicaciones Web | Andrés Malagreca | Damián Berruezo | Celeste Coopa | Alicia Rosenthal</div>
 	</body>
 </html>
+=======
+<?php
+    header('Location: ./pag/precioProductos.php');
+?>
+>>>>>>> 7d2377c929a081b6e18edc3c8c3e3e567c4701ac

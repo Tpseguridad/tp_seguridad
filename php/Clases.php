@@ -53,24 +53,30 @@
         public $idUsuario;
         public $comentario;
         public $titulo;
+        public $apellido;
+        public $nombre;
         
-        function __construct ($id, $idProducto, $idUsuario, $comentario, $titulo) {
+        function __construct ($id, $idProducto, $idUsuario, $comentario, $titulo, $apellido, $nombre) {
             $this->id = $id;
             $this->idProducto = $idProducto;
             $this->idUsuario = $idUsuario;
             $this->comentario = $comentario;
             $this->titulo = $titulo;
+            $this->apellido = $apellido;
+            $this->nombre = $nombre;
         }
     }
     
     class ResultadoSemanaProducto {
+        public $id;
         public $nombreProducto;
         public $semana;
         public $promedio;
         public $minimo;
         public $maximo;
         
-        function __construct ($nombreProducto, $semana, $promedio, $minimo, $maximo) {
+        function __construct ($id, $nombreProducto, $semana, $promedio, $minimo, $maximo) {
+            $this->id = $id;
             $this->nombreProducto = $nombreProducto;
             $this->semana = $semana;
             $this->promedio = $promedio;

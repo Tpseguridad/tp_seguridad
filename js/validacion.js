@@ -64,12 +64,15 @@ $(document).ready(function(){
 			var passencriptado = hex_md5(document.getElementById("password_us").value);
                         $.ajax({
 				type: "GET",
-				url:"./php/MainController.php",
+				url:"../php/MainController.php",
 				contentType: "application/x-www-form-urlencoded",
 				processData: true,
-				data: "&action=traerUsu&email="+escape($('#email').val())+"&password_us=" + passencriptado,
+				data: "&action=logInUser&email="+escape($('#email').val())+"&password_us=" + passencriptado,
 				success: function(msg){
-					$("#mensaje").html("<p class='ok'>Te has logueado correctamente.Gracias!</p>"+hash);
+                                        msg = $.parseJSON(msg);
+					$("#mensaje").html("<p class='ok'>Te has logueado correctamente.Gracias!</p>");
+                                        handleResponse(msg, mostrarUsuarioLogueado, mostrarMensajeError);
+                                        verificarPermisosControles();
 					document.getElementById("email").value="";
 					document.getElementById("password_us").value="";
 					setTimeout(function() {$('#mensaje').fadeOut('fast');}, 6000);
@@ -91,13 +94,19 @@ $(document).ready(function(){
 			$("#mensaje").show();
 			$("#mensaje").html("<p class='pensando'>Enviando el formulario, por favor espere...</p>");
 			$.ajax({
-				type: "POST",
-				url:"funciones.php",
+				type: "GET",
+				url:"../php/MainController.php",
 				contentType: "application/x-www-form-urlencoded",
 				processData: true,
-				data: "&titulo="+escape($('#titulo').val())+"&comentario="+escape($('#comentario').val()),
+				data: "&action=insComment&titulo="+escape($('#titulo').val())+"&comentario="+escape($('#comentario').val()),
 				success: function(msg){
-					$("#mensaje").html("<p class='ok'>Tu comentario ha sido enviado correctamente.Gracias!</p>");
+                                        msg = $.parseJSON(msg);
+                                        if (msg.errorMessage !== undefined) {
+                                            $("#mensaje").html("<p class='ok'>" + msg.errorMessage + "</p>");
+                                        } else {
+                                            $("#mensaje").html("<p class='ok'>Tu comentario ha sido enviado correctamente.Gracias!</p>");
+                                            cargarComentarios();
+                                        }
 					document.getElementById("titulo").value="";
 					document.getElementById("comentario").value="";
 					setTimeout(function() {$('#mensaje').fadeOut('fast');}, 6000);
