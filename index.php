@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang ="es">
+<html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>TusPrecios.com.ar</title>
@@ -25,7 +25,7 @@
 			<div id="login">
 				<form name="formlogin" id="formlogin" action="#" method="POST">
 					<label for="email">E-mail<input type="email" id="email" name="email"></label>
-					<label for="password">Password<input type="password" id="password_us" name="password_us"></label>
+					<label for="password">Password<input type="password" id="password_us" name="password_us" autocomplete = "off"></label>
 					<input type="submit" class="boton" value="login">
 					<a href="pag/registrousuario.php" class="boton2">Registrarme</a>
 				</form>

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="es">
+<html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>TusPrecios.com.ar</title>
@@ -20,15 +20,9 @@
 		<div id="header">
 			<div id="login">
 				<form name="formlogin" style="display: none" id="formlogin" action="#" method="GET">
-<<<<<<< HEAD
 					<label for="emailLogin">E-mail<input type="email" id="emailLogIn" name="emailLogIn"></label>
-					<label for="password">Password<input type="password" id="password_us_logIn" name="password_us_logIn"></label>
+					<label for="password">Password<input type="password" id="password_us_logIn" name="password_us_logIn" autocomplete ="off"></label>
 					<input type="submit" class="boton" value="login">
-=======
-					<label for="emailLogIn"><input type="email" id="emailLogIn" name="emailLogIn" placeholder="Email" autocomplete="off" /></label>
-					<label for="password_us_logIn"><input type="password" id="password_us_logIn" name="password_us_logIn" placeholder="Password"  autocomplete="off"/></label>
-					<input type="submit" class="boton" value="login" />
->>>>>>> 9345bef6bac5362b0d1cff59919e88f5e2a60d6f
 					<a href="registrousuario.php" class="boton2">Registrarme</a>
 				</form>
                                 <form name="logInfo" style="display: none" id="logInfo" action="#" method="GET">

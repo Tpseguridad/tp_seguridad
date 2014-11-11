@@ -25,11 +25,11 @@
 							</li>
 							<li>
 								<label for="paswword">Password:</label>
-								<input type="password"  name="password_us" id="password_us">
+								<input type="password"  name="password_us" id="password_us" autocomplete ="off">
 							</li>
 							<li>
 								<label for="repassword">Re-ingrese Password:</label>
-								<input type="password"  name="repassword" id="repassword">
+								<input type="password"  name="repassword" id="repassword" autocomplete ="off">
 							</li>
 							<li>
 								<input type="submit" class="boton" value="Enviar">
