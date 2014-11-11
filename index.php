@@ -1,13 +1,12 @@
-<<<<<<< HEAD
-<!doctype html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang ="es">
 	<head>
-		<meta charset="UTF-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>TusPrecios.com.ar</title>
-		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />	
-		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
-		<link rel="author" type="text/plain" href="humans.txt"/>
-		<link rel="sitemap" type="application/xml" title="Sitemap" href="sitemap.xml"/>
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">	
+		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+		<link rel="author" type="text/plain" href="humans.txt">
+		<link rel="sitemap" type="application/xml" title="Sitemap" href="sitemap.xml">
 		<!--[if lt IE 9]>
 			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
@@ -22,19 +21,19 @@
                 <script type="text/javascript" src="js/md5.js"></script>
 	</head>
 	<body>
-		<header>
+		<div id="header">
 			<div id="login">
 				<form name="formlogin" id="formlogin" action="#" method="POST">
-					<label for="email">	<input type="email" id="email" name="email" placeholder="Email" autocomplete="off" /></label>
-					<label for="password"><input type="password" id="password_us" name="password_us" placeholder="Password"  autocomplete="off"/></label>
-					<input type="submit" class="boton" value="login" />
+					<label for="email">E-mail<input type="email" id="email" name="email"></label>
+					<label for="password">Password<input type="password" id="password_us" name="password_us"></label>
+					<input type="submit" class="boton" value="login">
 					<a href="pag/registrousuario.php" class="boton2">Registrarme</a>
 				</form>
 			</div>
 			<div id="logo">
 			</div>
-		</header>
-		<nav>
+		</div>
+		<div id="nav">
 			<div id="menu">
 				<ul class="menu">
 					<li><a href="index.php">Home</a></li>
@@ -42,9 +41,9 @@
 					<li><a href="pag/subirproductos.php">Subir Productos</a></li>
 				</ul>
 			</div>
-		</nav>
+		</div>
 		<div id="main">
-			<section>
+			<div>
 				<h1>Listado de precios</h1>
 				<p>Elegi la semana: </p> 
 
@@ -69,12 +68,12 @@
 					</tr>
                                     </tbody>
 				</table>
-			</section>
+			</div>
 			<a href="#" id ="top" ></a>
 		</div>
-		<footer>
+		<div id="footer">
 			<a href="#">Acerca de Nosotros </a> | <a href="#">Ayuda </a> | <a href="#">Términos y condiciones </a> | <a href="#">Contacto </a>
-		</footer>
+		</div>
 		<div id="copyrigth">Tp Seguridad de Aplicaciones Web | Andrés Malagreca | Damián Berruezo | Celeste Coopa | Alicia Rosenthal</div>
 	</body>
 </html>

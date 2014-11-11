@@ -2,7 +2,7 @@
 	include ("header.php");
 ?>
 		<div id="main">
-			<section>
+			<div>
 				<div class="formulario">
 					<h2>Subí un producto</h2>
 					<form name="formproducto" id="formproducto" method="post">
@@ -10,18 +10,18 @@
 						<ul>
 							<li>
 								<label for="nombre_producto">Nombre Producto:</label>
-								<input type="text"  name="nombre_producto" id="nombre_producto" placeholder="Ingresa el nombre del producto" autocomplete="off" />
+								<input type="text"  name="nombre_producto" id="nombre_producto">
 							</li>
 							<li>
 								<label for="descripcion">Descripción Producto:</label>
-								<textarea  name="descripcion" id="descripcion" />
+								<textarea  name="descripcion" id="descripcion">
 								</textarea>
 							</li>
 							<li>
                                                                 <input type="hidden" id="idProd" value="">
-                                                                <input type="hidden" id="action" value="insProd"/>
-                                                                <input type="button" id="cancelar" style="display: none" class="boton" value="Cancelar" />
-								<input type="submit" class="boton" value="Enviar" />
+                                                                <input type="hidden" id="action" value="insProd">
+                                                                <input type="button" id="cancelar" style="display: none" class="boton" value="Cancelar">
+								<input type="submit" class="boton" value="Enviar">
 							</li>
 							<li id="mensaje"></li>
 						</ul>
@@ -45,7 +45,7 @@
 					</tr>
                                     </tbody>
 				</table>
-			</section>
+			</div>
 <?php
 	include ("footer.php");
 ?>

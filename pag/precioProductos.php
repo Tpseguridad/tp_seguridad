@@ -3,11 +3,11 @@
 ?>
 <script type="text/javascript" src="../js/precioProductos.js"></script>
 		<div id="main">
-			<section>
+			<div>
 				<h1>Listado de precios</h1>
 				<p>Elegi la semana: </p> 
 
-				<select id="semanas">
+				<select name="semanas" id="semanas">
 				</select>
 				<!-- aca meter combobox-->
 				<table>
@@ -23,7 +23,7 @@
 					</tr>
                                     </tbody>
 				</table>
-			</section>
+			</div>
 <?php
 	include ("footer.php");
 ?>

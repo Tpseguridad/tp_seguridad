@@ -3,7 +3,7 @@
 ?>
             <script type="text/javascript" src="../js/producto.js"></script>
 		<div id="main">
-			<section>
+			<div>
 				<h1 id="titProd"></h1>
 				<p id="promProd"></p>
 				<p id="minProd"></p>
@@ -14,14 +14,14 @@
 						<ul>
 							<li>
 								<label for="titulo">Titulo Comentario:</label>
-								<input type="text"  name="titulo" id="titulo" placeholder="Ingresa el titulo del comentario" />
+								<input type="text"  name="titulo" id="titulo">
 							</li>
 							<li>
 								<label for="comentario">Comentario:</label>
-								<textarea  name="comentario" id="comentario" /></textarea>
+								<textarea  name="comentario" id="comentario"></textarea>
 							</li>
 							<li>
-								<input type="submit" class="boton" value="Enviar" />
+								<input type="submit" class="boton" value="Enviar">
 							</li>
 							<li id="mensaje"></li>
 						</ul>
@@ -31,7 +31,7 @@
 				<div id="tablaComentarios" class="comentario">
                                     No hay comentarios para este producto.
 				</div>
-			</section>
+			</div>
 <?php
 	include ("footer.php");
 ?>
