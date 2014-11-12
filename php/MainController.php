@@ -1,8 +1,7 @@
 <?php
     session_start();
-    if ( isset( $_COOKIE[session_name()] ) ) {
-        setcookie( session_name(), '', time()-3600, '' );
-    }
+    
+    //error_reporting(0); //Necesario para evitar mostrar los errores al usuario con la posibilidad de dar informacion al atacante.
     
     require_once './Clases.php';
     require_once './Constantes.php';
@@ -173,97 +172,116 @@
             $result = parseProducto($stmtResult);
             break;
         case AccionControlador::insertarComentario:
-            
-            /*
-            if (in_array($_SESSION['idRolUsuario'], ListaRoles::$roles)) {
-                if (
-                        in_array(AccionControlador::insertarComentario, PermisosRol::$permisosAdministrador['statements']) ||
-                        in_array(AccionControlador::insertarComentario, PermisosRol::$permisosRegistrado['statements'])
-                   ) {
-                    
-                }
-                
-            } else {
-                
-            }comentario, id_produ, id_usu, titulo
-            */
-            $paramArray[] = $_GET['comentario'];
-            $paramArray[] = $_SESSION['idProducto'];
-            
-            $usuarioConectado = verificarUsuario();
-            
-            $paramArray[] = !empty($usuarioConectado) ? $usuarioConectado[0]['id_usuario'] : null;
-            $paramArray[] = $_GET['titulo'];
-            
-            //var_dump($paramArray, $usuarioConectado);
-            
-            $stmtResult = executeStatement(SQLStatement::insertarComentario, $paramArray);
-            $result = parseResponse($stmtResult);
-            break;
-        case AccionControlador::insertarPrecioProducto:
-            $date = new DateTime();
-            $semana = $date->format("W");
-            
-            $paramArray[] = $_GET['producto'];
-            $usuarioConectado = verificarUsuario();
-            $paramArray[] = $usuarioConectado[0]['id_usuario'];
-            $paramArray[] = $semana;
-            $existePrecio = queryStatement(SQLStatement::traerPrecioProducto, $paramArray);
-            $paramArray[] = $_GET['precio'];
-            
-            if (empty($existePrecio)) {
-                $stmtResult = executeStatement(SQLStatement::insertarPrecioProducto, $paramArray);
+            if (verificarPermisosStatements(SQLStatement::insertarComentario)) {
+                $paramArray[] = $_GET['comentario'];
+                $paramArray[] = $_SESSION['idProducto'];
+
+                $usuarioConectado = verificarUsuario();
+                $paramArray[] = !empty($usuarioConectado) ? $usuarioConectado[0]['id_usuario'] : null;
+                $paramArray[] = $_GET['titulo'];
+
+                //var_dump($paramArray, $usuarioConectado);
+
+                $stmtResult = executeStatement(SQLStatement::insertarComentario, $paramArray);
                 $result = parseResponse($stmtResult);
             } else {
-                array_pop($paramArray);
-                array_unshift($paramArray, $_GET['precio']);
-                $stmtResult = executeStatement(SQLStatement::actualizaPrecioProducto, $paramArray);
-                $result = parseResponse($stmtResult);
+                $result = generarMensajeNoAutorizado();
             }
             break;
-        case AccionControlador::insertarProducto:            
-            $paramArray[] = $_GET['nombre_producto'];
-            $stmtResult = queryStatement(SQLStatement::buscarProducto,$paramArray);
-            $paramArray[] = $_GET['descripcion'];
-            
-            if(empty($stmtResult)) {
-                $stmtResult = executeStatement(SQLStatement::insertarProducto,$paramArray);
-                $result = parseResponse($stmtResult);
+        case AccionControlador::insertarPrecioProducto:
+            if (
+                    verificarPermisosStatements(SQLStatement::insertarPrecioProducto) && 
+                    verificarPermisosStatements(SQLStatement::actualizaPrecioProducto) &&
+                    verificarPermisosStatements(SQLStatement::traerPrecioProducto)
+            ) {
+                $date = new DateTime();
+                $semana = $date->format("W");
+
+                $paramArray[] = $_GET['producto'];
+                $usuarioConectado = verificarUsuario();
+                $paramArray[] = $usuarioConectado[0]['id_usuario'];
+                $paramArray[] = $semana;
+                $existePrecio = queryStatement(SQLStatement::traerPrecioProducto, $paramArray);
+                $paramArray[] = $_GET['precio'];
+
+                if (empty($existePrecio)) {
+                    $stmtResult = executeStatement(SQLStatement::insertarPrecioProducto, $paramArray);
+                    $result = parseResponse($stmtResult);
+                } else {
+                    array_pop($paramArray);
+                    array_unshift($paramArray, $_GET['precio']);
+                    $stmtResult = executeStatement(SQLStatement::actualizaPrecioProducto, $paramArray);
+                    $result = parseResponse($stmtResult);
+                }
             } else {
-                $result = array('errorMessage' => 'Imposible registrar nuevo producto. El producto ya existe.');
+                $result = generarMensajeNoAutorizado();
+            }
+            break;
+        case AccionControlador::insertarProducto:
+            if (
+                    verificarPermisosStatements(SQLStatement::buscarProducto) && 
+                    verificarPermisosStatements(SQLStatement::insertarProducto)
+            ) {
+                $paramArray[] = $_GET['nombre_producto'];
+                $stmtResult = queryStatement(SQLStatement::buscarProducto,$paramArray);
+                $paramArray[] = $_GET['descripcion'];
+
+                if(empty($stmtResult)) {
+                    $stmtResult = executeStatement(SQLStatement::insertarProducto,$paramArray);
+                    $result = parseResponse($stmtResult);
+                } else {
+                    $result = array('errorMessage' => 'Imposible registrar nuevo producto. El producto ya existe.');
+                }
+            } else {
+                $result = generarMensajeNoAutorizado();
             }
             break;
         case AccionControlador::insertarUsuario:
-            $paramArray[] = $_GET['nombre_usuario'];
-            $paramArray[] = $_GET['nombre'];
-            $paramArray[] = $_GET['apellido'];
-            $paramArray[] = $_GET['email'];
-            $paramArray[] = $_GET['password_us'];
-            $paramArray[] = 1; //rol usuario
-            
-            $stmtResult = executeStatement(SQLStatement::insertarUsuario, $paramArray);
-            $result = parseResponse($stmtResult);
-            break;
-        case AccionControlador::actualizarProducto:            
-            $paramArray[] = $_GET['idProd'];
-            $stmtResult = executeStatement(SQLStatement::traerUnProducto,$paramArray);
-            
-            if(!empty($stmtResult)) {
-                $paramArray = null;
-                $paramArray[] = $_GET['nombre_producto'];
-                $paramArray[] = $_GET['descripcion'];
-                $paramArray[] = $_GET['idProd'];
-                $stmtResult = executeStatement(SQLStatement::actualizarProducto,$paramArray);
+            if (verificarPermisosStatements(SQLStatement::insertarUsuario)) {
+                $paramArray[] = $_GET['nombre_usuario'];
+                $paramArray[] = $_GET['nombre'];
+                $paramArray[] = $_GET['apellido'];
+                $paramArray[] = $_GET['email'];
+                $paramArray[] = $_GET['password_us'];
+                $paramArray[] = 1; //rol usuario
+
+                $stmtResult = executeStatement(SQLStatement::insertarUsuario, $paramArray);
                 $result = parseResponse($stmtResult);
             } else {
-                $result = array('errorMessage' => 'Imposible actualizar los datos. No se encuentra el producto.');
+                $result = generarMensajeNoAutorizado();
+            }
+            break;
+        case AccionControlador::actualizarProducto:
+            if (
+                    verificarPermisosStatements(SQLStatement::traerUnProducto) && 
+                    verificarPermisosStatements(SQLStatement::actualizarProducto)
+            ) {
+                $paramArray[] = $_GET['idProd'];
+                $stmtResult = executeStatement(SQLStatement::traerUnProducto,$paramArray);
+
+                if(!empty($stmtResult)) {
+                    $paramArray = null;
+                    $paramArray[] = $_GET['nombre_producto'];
+                    $paramArray[] = $_GET['descripcion'];
+                    $paramArray[] = $_GET['idProd'];
+                    $stmtResult = executeStatement(SQLStatement::actualizarProducto,$paramArray);
+                    $result = parseResponse($stmtResult);
+                } else {
+                    $result = array('errorMessage' => 'Imposible actualizar los datos. No se encuentra el producto.');
+                }
+            } else {
+                $result = generarMensajeNoAutorizado();
             }
             break;
         case AccionControlador::borrarProducto:
-            $paramArray[] = $_GET['idProd'];
-            
-            $stmtResult = executeStatement(SQLStatement::borrarProducto, $paramArray);
-            $result = parseResponse($stmtResult);
+            if (verificarPermisosStatements(SQLStatement::insertarUsuario)) {
+                $paramArray[] = $_GET['idProd'];
+
+                $stmtResult = executeStatement(SQLStatement::borrarProducto, $paramArray);
+                $result = parseResponse($stmtResult);
+            } else {
+                $result = generarMensajeNoAutorizado();
+            }
             break;
     }
     

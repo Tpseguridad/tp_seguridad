@@ -38,7 +38,7 @@
     
     function createConnection () {
         $username = 'root';
-        $password = '';
+        $password = ''; //A fines practicos se mantienen usuario y contraseñas por defecto.
         $hostname = 'localhost';
         $dbname = 'productos';
         $dbConnection = null;
@@ -68,5 +68,29 @@
         }
         
         return $stmt;
+    }
+    
+    function verificarPermisosStatements ($statementRequerido) {
+        $idRolUsuario = isset($_SESSION['rolUsuario']) ? $_SESSION['rolUsuario'] : 'anonimo';
+        if (in_array($idRolUsuario, ListaRoles::$roles)) {
+            switch ($idRolUsuario) {
+                case RolesUsuario::administrador:
+                    $tienePermisos = in_array($statementRequerido, PermisosRol::$permisosAdministrador['statements']);
+                    break;
+                case RolesUsuario::registrado:
+                    $tienePermisos = in_array($statementRequerido, PermisosRol::$permisosRegistrado['statements']);
+                    break;
+                case RolesUsuario::anonimo:
+                    $tienePermisos = in_array($statementRequerido, PermisosRol::$permisosAnonimo['statements']);
+                    break;
+                default:
+                    $tienePermisos = false;
+                    break;
+            }
+        } else {
+            $tienePermisos = false;
+        }
+        
+        return $tienePermisos;
     }
 ?>

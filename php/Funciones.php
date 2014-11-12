@@ -123,4 +123,8 @@
             'apellido' => $usuarioConectado[0]['apellido']
         );
     }
+    
+    function generarMensajeNoAutorizado () {
+        return array('errorMessage' => 'No tiene permiso para ejecutar esta accion.');
+    }
 ?>

@@ -22,7 +22,7 @@
 //    }
 
     abstract class ListaRoles {
-        static $roles = array(RolesUsuario::administrador, RolesUsuario::registrado);
+        static $roles = array(RolesUsuario::administrador, RolesUsuario::registrado, RolesUsuario::anonimo);
     }
     
     abstract class PermisosRol {
@@ -47,6 +47,20 @@
             'statements' => array(SQLStatement::actualizaPrecioProducto,
                 SQLStatement::buscarProducto, SQLStatement::conectarUsuario,
                 SQLStatement::desconectarUsuario, SQLStatement::insertarComentario, SQLStatement::insertarPrecioProducto,
+                SQLStatement::insertarUsuario, SQLStatement::traerComentarios,
+                SQLStatement::traerNombreProducto, SQLStatement::traerPrecioProducto, SQLStatement::traerProductos,
+                SQLStatement::traerProductosDeSemana, SQLStatement::traerSemanasProducto, SQLStatement::traerUnProducto,
+                SQLStatement::traerUnProductoDeSemana, SQLStatement::traerUsuario, SQLStatement::verificarSesionUsuario
+            )
+        );
+        
+        static $permisosAnonimo = array(
+            'rol' => array(RolesUsuario::registrado),
+            'paginas' => array(Paginas::subirPrecios),
+            'controles' => array(Controles::menuItemPrecios),
+            'statements' => array(SQLStatement::actualizaPrecioProducto,
+                SQLStatement::buscarProducto, SQLStatement::conectarUsuario,
+                SQLStatement::desconectarUsuario, SQLStatement::insertarComentario,
                 SQLStatement::insertarUsuario, SQLStatement::traerComentarios,
                 SQLStatement::traerNombreProducto, SQLStatement::traerPrecioProducto, SQLStatement::traerProductos,
                 SQLStatement::traerProductosDeSemana, SQLStatement::traerSemanasProducto, SQLStatement::traerUnProducto,

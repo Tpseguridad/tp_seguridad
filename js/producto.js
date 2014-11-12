@@ -31,7 +31,6 @@ function mostrarComentarios (responseJSONMessage) {
             '<p class="autor">' + responseJSONMessage[i].apellido + ', ' + responseJSONMessage[i].nombre + '</p>' :
             '<p class="autor">Anonimo</p>'
         ;
-        console.log(responseJSONMessage);
         $('#tablaComentarios').prepend(newRow);
     }
 }
