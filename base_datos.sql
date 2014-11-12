@@ -1,5 +1,4 @@
-DROP SCHEMA productos;
-CREATE SCHEMA productos;
+CREATE SCHEMA IF NOT EXISTS productos;
 USE productos;
 
 CREATE TABLE tp1_usuario_rol(
@@ -39,7 +38,8 @@ CONSTRAINT pk_ppu_id PRIMARY KEY (id_ppu),
 CONSTRAINT fk_usuario FOREIGN KEY (id_us)
 REFERENCES tp1_usuario(id_usuario),
 CONSTRAINT fk_producto FOREIGN KEY (id_prod)
-REFERENCES tp1_producto(id_producto),
+REFERENCES tp1_producto(id_producto)
+ON DELETE CASCADE,
 CONSTRAINT nro_semana CHECK (semana>0 AND semana <54),
 CONSTRAINT precio_invalido CHECK (precio>0)
 );
@@ -54,16 +54,9 @@ CONSTRAINT pk_comen_id PRIMARY KEY (id_comentario_producto),
 CONSTRAINT fk_us FOREIGN KEY (id_usu)
 REFERENCES tp1_usuario(id_usuario),
 CONSTRAINT fk_prod FOREIGN KEY (id_produ)
-REFERENCES tp1_producto(id_producto)
+REFERENCES tp1_producto(id_producto) 
+ON DELETE CASCADE
 );
-
--- CREATE VIEW tp1_resultado_semana_producto AS
--- SELECT nombre_producto, semana, AVG(precio) AS "promedio", 
--- MIN(precio) AS "minimo", 
--- MAX(precio) AS "maximo" 
--- FROM tp1_precio_producto_usuario ppu INNER JOIN tp1_producto
--- ON ppu.id_prod = tp1_producto.id_producto
--- GROUP BY ppu.id_prod, ppu.semana;
 
 CREATE VIEW tp1_resultado_semana_producto AS
 SELECT ppu.id_prod, ppu.semana, ROUND(AVG(ppu.precio), 2) AS "promedio", 
@@ -72,36 +65,35 @@ MAX(ppu.precio) AS "maximo"
 FROM tp1_precio_producto_usuario ppu 
 GROUP BY ppu.id_prod, ppu.semana;
 
-INSERT INTO tp1_usuario_rol VALUES (1, 'Administrador');
-INSERT INTO tp1_usuario_rol VALUES (2, 'Usuario');
+INSERT INTO tp1_usuario_rol VALUES (1, 'usuario');
+INSERT INTO tp1_usuario_rol VALUES (2, 'administrador');
 
-INSERT INTO tp1_usuario VALUES (1, 'Elandy2009', 'Aa123456', 'Andrés', 'Malagreca', 'leandroandres1@gmail.com', 1);
-INSERT INTO tp1_usuario VALUES (2, 'Celeste1', 'Seguridad2014', 'Celeste', 'Coopa', 'celeste.coopa@gmail.com', 1);
-INSERT INTO tp1_usuario VALUES (3, 'aliciarosenthal', 'Alicia2014', 'Alicia', 'Rosenthal', 'aliciarosenthal@gmail.com', 2);
-INSERT INTO tp1_usuario VALUES (4, 'Damio', 'Damian2014', 'Damian', 'Berruezo', 'damianb@gmail.com', 2);
+INSERT INTO tp1_usuario VALUES
+(1, 'Elandy2009', 'afdd0b4ad2ec172c586e2150770fbf9e', 'Andres', 'Malagreca', 'leandroandres1@gmail.com', 2, NULL),
+(7, 'dami', 'af6e569de5191f08f82c748b76f44b33', 'Damian', 'Berruezo', 'asd@asd.com', 2, NULL), --Password: Dami2014
+(8, 'Arosenthal', '1983de1e6a15361566ca1aa6739c214e', 'Alicia', 'Rosenthal', 'aliciarosenthal@gmail.com', 1, NULL),
+(9, 'Celes', '8ae1879c95d4afeabbf25270e690f239', 'Celeste', 'Coopa', 'celeste.coopa@gmail.com', 1, NULL);
 
-INSERT INTO `tp1_producto` VALUES (1, 'Ultramanguera', 'Ultramanguera, la mejor manguera del mercado');
-INSERT INTO `tp1_producto` VALUES (2,'Cafe', 'La morenita');
-INSERT INTO `tp1_producto` VALUES (3,' Aceite','El aceite de oliva');
-INSERT INTO `tp1_producto` VALUES (4,' Pan',' Producto comestible que resulta de hornear ');
-INSERT INTO `tp1_producto` VALUES (5,' Helado',' Bonobon corazon');
- 
-INSERT INTO `tp1_precio_producto_usuario` VALUES (1,1,1,1,10.02);
-INSERT INTO `tp1_precio_producto_usuario` VALUES (3,1,1,2,11.50);
-INSERT INTO `tp1_precio_producto_usuario` VALUES (4,1,1,3,12.00);
-INSERT INTO `tp1_precio_producto_usuario` VALUES (5,1,1,4,12.25);
- 
-INSERT INTO `tp1_precio_producto_usuario` VALUES (2,1,1,1,20.00);
-INSERT INTO `tp1_precio_producto_usuario` VALUES (6,1,2,2,21.50);
-INSERT INTO `tp1_precio_producto_usuario` VALUES (7,1,2,3,22.00);
-INSERT INTO `tp1_precio_producto_usuario` VALUES (8,1,2,4,23.25);
- 
-INSERT INTO tp1_precio_producto_usuario VALUES (9,2,1,1,10);
-INSERT INTO tp1_precio_producto_usuario VALUES (10,2,1,2,10.50);
-INSERT INTO tp1_precio_producto_usuario VALUES (11,2,1,3,11);
-INSERT INTO tp1_precio_producto_usuario VALUES (12,2,1,4,11.50);
-INSERT INTO tp1_precio_producto_usuario VALUES (13,2,3,1,10.25);
-INSERT INTO tp1_precio_producto_usuario VALUES (14,2,3,2,10.50);
-INSERT INTO tp1_precio_producto_usuario VALUES (15,2,3,3,11);
-INSERT INTO tp1_precio_producto_usuario VALUES (16,2,3,4,11.25);
+INSERT INTO tp1_producto VALUES
+(1, 'Ultramanguera', 'Ultramanguera, la mejor manguera del mercadof'),
+(2, 'Cafe', 'La morenitasd'),
+(9, 'Agua Mineral', 'Bon Aqua');
 
+
+INSERT INTO tp1_precio_producto_usuario VALUES
+(1, 1, 1, 1, '10.02'),
+(2, 1, 1, 1, '20.00'),
+(9, 1, 1, 45, '8475.00'),
+(10, 2, 1, 45, '353.00'),
+(11, 1, 1, 46, '5000.00'),
+(12, 2, 1, 46, '5.00'),
+(13, 1, 8, 46, '350.00'),
+(14, 2, 8, 46, '21.00'),
+(15, 9, 1, 46, '10.00'),
+(16, 9, 8, 46, '8.00');
+
+INSERT INTO tp1_comentario_usuario_producto  VALUES
+(7, 1, 8, 'Que caro!', 'No sabia que habia aumentado tanto esto!'),
+(8, 2, 8, 'Donde lo compraste?', 'Me encantaria conseguirlo a ese precio, me pasas el dato?'),
+(9, 2, NULL, 're: Donde lo compraste?', 'En la tienda de Alcorta y Varela, la vas a reconocer porque tiene cafes en la vidriera.'),
+(10, 9, 7, 'Consulta cantidad', 'De cuanto seria el agua? Una botella chica?');
